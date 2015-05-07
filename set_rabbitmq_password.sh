@@ -10,18 +10,9 @@ USER=${RABBITMQ_USER:-"admin"}
 _word=$( [ ${RABBITMQ_PASS} ] && echo "preset" || echo "random" )
 echo "=> Securing RabbitMQ with a ${_word} password"
 cat > /etc/rabbitmq/rabbitmq.config <<EOF
-[
-	{rabbit, [{default_user, <<"$USER">>},{default_pass, <<"$PASS">>},{tcp_listeners, [{"0.0.0.0", 5672}]}]}
-].
+[{rabbit, [{default_user, <<"$USER">>},{default_pass, <<"$PASS">>},{tcp_listeners, [{"0.0.0.0", 5672}]},{vm_memory_high_watermark,0.5 },{vm_memory_high_watermark_paging_ratio,0.6 }, {disk_free_limit,500000000}]}].
 EOF
 
 echo "=> Done!"
 touch /.rabbitmq_password_set
 
-echo "========================================================================"
-echo "You can now connect to this RabbitMQ server using, for example:"
-echo ""
-echo "    curl --user $USER:$PASS http://<host>:<port>/api/vhosts"
-echo ""
-echo "Please remember to change the above password as soon as possible!"
-echo "========================================================================"
