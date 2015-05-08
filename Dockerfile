@@ -32,6 +32,12 @@ ADD run.sh /run.sh
 ADD set_rabbitmq_password.sh /set_rabbitmq_password.sh 
 RUN chmod 755 ./*.sh
 
+# add a time stamp
+COPY set-time.sh /
+RUN chmod +x /set-time.sh
+RUN /set-time.sh
+
+
 
 VOLUME ["/var/lib/rabbitmq","/etc/rabbitmq","/var/log/rabbitmq"]
 
