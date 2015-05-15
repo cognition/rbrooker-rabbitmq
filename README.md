@@ -6,7 +6,7 @@ Base docker image to run a RabbitMQ server version 3.5.2
 
 Usage
 -----
-
+```
 docker run -d -it \
     -v /opt/rabbitmq/rabbit/etc:/etc/rabbitmq  \
     -v /opt/rabbitmq/rabbit/var:/var/lib/rabbitmq \ 
@@ -18,7 +18,7 @@ docker run -d -it \
     -e HOSTNAME=rabbit.bunny.hop \ 
     -e RABBITMQ_PASS=admin 
     -e CLUSTERED=0 rbrooker/rabbitmq:2
-
+```
 
 Usage with a Cluster 
 ---------------------
