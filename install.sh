@@ -44,7 +44,7 @@ echo " create master RabbitMQ Node -- $MA"
 
 # master Node --> 
 docker run -d -it $VOLS $NAMES_HOSTS $MASTER_PARAMS $STND_PARAMS -e HOSTNAME=$MA_LONG -e RABBITMQ_PASS="admin" -e CLUSTERED=0 $DOCKER_IMAGE
-docker logs $MA
+docker logs $MA "
 sleep 3
 echo ""
 echo "please wait....."
