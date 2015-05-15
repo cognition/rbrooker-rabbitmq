@@ -10,13 +10,11 @@ ENV R_VERISON_MINOR=3.2.4-1
 RUN echo exit 101 > /usr/sbin/policy-rc.d
 RUN chmod +x /usr/sbin/policy-rc.d
 
-RUN apt-get update && apt-get -y upgrade
 
-
-# Install RabbitMQ
+# Install RabbitMQ and Updates
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F7B8CEA6056E8E56 && \
 echo "deb http://www.rabbitmq.com/debian/ testing main" >> /etc/apt/sources.list 
-RUN apt-get update &&  apt-get install -y rabbitmq-server=$R_VERISON_MINOR  pwgen 
+RUN apt-get update && apt-get -y upgrade &&  apt-get install -y rabbitmq-server=$R_VERISON_MINOR  pwgen 
 RUN rabbitmq-plugins enable rabbitmq_management
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
