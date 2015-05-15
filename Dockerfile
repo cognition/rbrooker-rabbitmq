@@ -1,4 +1,4 @@
-FROM ubuntu:trusty
+FROM ubuntu:vivid
 MAINTAINER Ramon Brooker <rbrooker@aetherealmind.com>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -6,8 +6,11 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV R_VERSION_MAJOR=3.2
 ENV R_VERISON_MINOR=3.2.4-1
 
+# to allow updates to be installed
+RUN echo exit 101 > /usr/sbin/policy-rc.d
+RUN chmod +x /usr/sbin/policy-rc.d
 
-
+RUN apt-get update && apt-get -y upgrade
 
 
 # Install RabbitMQ
@@ -18,7 +21,7 @@ RUN rabbitmq-plugins enable rabbitmq_management
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
-RUN echo "ERLANGCOOKIE0000rbrooker" > /var/lib/rabbitmq/.erlang.cookie
+RUN echo "ILIKETOEATCOOKIESERLANGONESTOOOOOO" > /var/lib/rabbitmq/.erlang.cookie
 RUN chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/
 RUN chmod 400 /var/lib/rabbitmq/.erlang.cookie
 
@@ -28,8 +31,8 @@ RUN rabbitmq-plugins list
 
 
 # Add scripts
-ADD run.sh /run.sh
-ADD set_rabbitmq_password.sh /set_rabbitmq_password.sh 
+COPY run.sh /run.sh
+COPY initial_setup.sh /initial_setup.sh 
 RUN chmod 755 ./*.sh
 
 # add a time stamp

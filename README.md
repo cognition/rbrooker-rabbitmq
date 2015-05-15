@@ -10,9 +10,7 @@ Usage
 
 Usage with a Cluster 
 ---------------------
-
-
-
+see install.sh in the github repo 
 
 
 
