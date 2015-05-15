@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f /.rabbitmq_password_set ]; then
+if [ -f /.setup_done ]; then
 	echo "RabbitMQ password already set!"
 	exit 0
 fi
@@ -14,5 +14,5 @@ cat > /etc/rabbitmq/rabbitmq.config <<EOF
 EOF
 
 echo "=> Done!"
-touch /.rabbitmq_password_set
+touch /.setup_done
 

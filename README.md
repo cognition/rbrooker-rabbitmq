@@ -1,7 +1,7 @@
 RabbitMQ 
 =====================
 
-Base docker image to run a RabbitMQ server version 3.2.4
+Base docker image to run a RabbitMQ server version 3.5.2
 
 
 Usage
