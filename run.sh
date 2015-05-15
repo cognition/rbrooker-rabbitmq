@@ -2,8 +2,8 @@
 
 set -m
 
-if [ ! -f /.rabbitmq_password_set ]; then
-	/set_rabbitmq_password.sh
+if [ ! -f /.setup_done ]; then
+	/initial_setup.sh
 fi
 
 # make rabbit own its own files
