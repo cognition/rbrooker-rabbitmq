@@ -1,7 +1,7 @@
 RabbitMQ 
 =====================
 
-Base docker image to run a RabbitMQ server version 3.5.2
+Base docker image to run a RabbitMQ server version 3.5.3
 
 
 Usage
@@ -24,6 +24,13 @@ Usage with a Cluster
 ---------------------
 see install.sh in the github repo
 https://github.com/cognition/rbrooker-rabbitmq
+
+
+Special Situation
+------------------
+Where rebuilding reusing previously mounted volumes
+mostly done for updates, and run time flag changes)
+add the flag `` -e REBUILD=1 `` 
 
 
 

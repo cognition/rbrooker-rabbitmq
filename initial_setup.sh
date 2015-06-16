@@ -1,7 +1,12 @@
 #!/bin/bash
 
-if [ -f /.setup_done ]; then
-	echo "RabbitMQ password already set!"
+if [ REBUILD = 1 ]; then 
+    echo "this is a Rebuild resuing previous volumes" 
+    exit 0
+fi
+
+  if [ -f /.setup_done ]; then
+  	echo "RabbitMQ password already set!"
 	exit 0
 fi
 

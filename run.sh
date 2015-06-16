@@ -2,6 +2,13 @@
 
 set -m
 
+if [ REBUILD == 1 ]; then 
+  echo "rebuild"
+  /usr/sbin/rabbitmq-server
+  exit 0
+fi
+
+
 if [ ! -f /.setup_done ]; then
 	/initial_setup.sh
 fi

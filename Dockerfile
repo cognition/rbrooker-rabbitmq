@@ -4,7 +4,7 @@ MAINTAINER Ramon Brooker <rbrooker@aetherealmind.com>
 ENV DEBIAN_FRONTEND noninteractive
 # for setting
 ENV R_VERSION_MAJOR=3.5
-ENV R_VERISON_MINOR=3.5.2-1
+ENV R_VERISON_MINOR=3.5.3-1
 
 # to allow updates to be installed
 RUN echo exit 101 > /usr/sbin/policy-rc.d
