@@ -16,14 +16,15 @@ then
     if [[ ! -f /.AGENT ]]
     then
       rabbitmq-plugins disable rabbitmq_management 
-      #rabbitmq-server stop
       rabbitmq-plugins enable rabbitmq_management_agent
+      rabbitmq-plugins enable rabbitmq_shovel
       touch /.AGENT
     fi
   elif [[ ! -f /.MASTER ]]
   then
       rabbitmq-plugins enable rabbitmq_management
-      #rabbitmq-server stop
+      rabbitmq-plugins enable rabbitmq_shovel
+      rabbitmq-plugins enable rabbitmq_shovel_management
       touch /.MASTER
   fi
 fi

@@ -1,10 +1,10 @@
-FROM ubuntu:vivid
+FROM ubuntu:xenial
 MAINTAINER Ramon Brooker <rbrooker@aetherealmind.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 # for setting
-ENV R_VERSION_MAJOR=3.5
-ENV R_VERISON_MINOR=3.5.2-1
+ENV R_VERSION_MAJOR=3.6
+ENV R_VERISON_MINOR=3.6.1-1
 
 # to allow updates to be installed
 RUN echo exit 101 > /usr/sbin/policy-rc.d
@@ -19,7 +19,7 @@ RUN rabbitmq-plugins enable rabbitmq_management
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
-RUN echo "ILIKETOEATCOOKIESERLANGONESTOOOOOO" > /var/lib/rabbitmq/.erlang.cookie
+RUN echo $(pwgen 40 1 | tr [a-z] [A-Z]) > /var/lib/rabbitmq/.erlang.cookie
 RUN chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/
 RUN chmod 400 /var/lib/rabbitmq/.erlang.cookie
 
@@ -36,7 +36,7 @@ RUN chmod 755 ./*.sh
 # add a time stamp
 COPY set-time.sh /
 RUN chmod +x /set-time.sh
-RUN /set-time.sh
+RUN set-time.sh
 
 
 
