@@ -2,7 +2,7 @@
 
 # Written and Maintained by 
 # Ramon Brooker rbrooker@aetherealmind.com 
-# 2015 
+# 2016 
 
 DOCKER_IMAGE=rbrooker/rabbitmq
 
