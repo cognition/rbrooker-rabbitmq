@@ -1,4 +1,4 @@
-FROM ubuntu/xenial
+FROM ubuntu
 MAINTAINER Ramon Brooker <rbrooker@aetherealmind.com>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -24,7 +24,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F7B8CEA6056E8E56 ; 
     apt-get autoremove -y ; \
     apt-get clean && rm -rf /var/lib/apt/lists/*  ;
 
-RUN $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie; \
+RUN echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie; \
     cat /var/lib/rabbitmq/.erlang.cookie ; \
     chmod 400 /var/lib/rabbitmq/.erlang.cookie ;   \
     chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/ 
