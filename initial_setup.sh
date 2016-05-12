@@ -1,11 +1,11 @@
 #!/bin/bash
 
 if [ -f /.setup_done ]; then
-	echo "RabbitMQ password already set!"
+	echo "RabbitMQ Container Already Initialized"
 	exit 0
 fi
 
-PASSWORD=${RABBITMQ_PASS:-$(pwgen -s 12 1)}
+#PASSWORD=${RABBITMQ_PASS:-$(pwgen -s 12 1)}
 USER=${RABBITMQ_USER:-"admin"}
 _word=$( [ ${RABBITMQ_PASS} ] && echo "preset" || echo "random" )
 echo "=> Securing RabbitMQ with a ${_word} password"
@@ -33,4 +33,5 @@ EOF
 
 echo "=> Done!"
 touch /.setup_done
+exit 0 
 
