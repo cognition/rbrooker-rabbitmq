@@ -1,4 +1,4 @@
-FROM rbrooker/xenial
+FROM ubuntu/xenial
 MAINTAINER Ramon Brooker <rbrooker@aetherealmind.com>
 
 ENV DEBIAN_FRONTEND noninteractive
