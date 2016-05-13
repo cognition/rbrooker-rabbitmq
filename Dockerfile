@@ -31,12 +31,23 @@ RUN echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie; \
 
 
 # Add scripts
-ADD *.sh  /
 
-RUN chmod 755 /*.sh \
-    ./set-time.sh \
-    ./initial_setup.sh
+RUN echo "before" && ls -al /
+ADD set-time.sh  /set-time.sh
+ADD initial_setup.sh /initial_setup.sh
+ADD run.sh /run.sh
 
+
+
+RUN chmod 755 /*.sh 
+
+RUN echo "chmod " && ls -al /
+
+RUN  /set-time.sh  
+RUN  echo "set-time" && ls -al /
+RUN  /initial_setup.sh
+
+RUN ls -al /
 
 
 
