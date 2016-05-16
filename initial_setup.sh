@@ -5,13 +5,15 @@ if [ -f /.setup_done ]; then
 	exit 0
 fi
 
-#PASSWORD=${RABBITMQ_PASS:-$(pwgen -s 12 1)}
+
 USER=${RABBITMQ_USER:-"admin"}
-_word=$( [ ${RABBITMQ_PASS} ] && echo "preset" || echo "random" )
+_word=${RABBITMQ_PASS:-"admin"}
+echo ""
 echo "=> Securing RabbitMQ with a ${_word} password"
+echo ""
 cat > /etc/rabbitmq/rabbitmq.config <<EOF
 [
-rabbit, [
+{rabbit, [
                 {default_user, <<"$USER">>},
                 {default_pass, <<"$PASSWORD">>},
                 {tcp_listeners, [{"0.0.0.0", 5672}]},
@@ -31,7 +33,31 @@ rabbit, [
 
 EOF
 
-echo "=> Done!"
-touch /.setup_done
-exit 0 
+
+# make rabbit own its own files
+chown -R rabbitmq:rabbitmq /var/lib/rabbitmq
+
+
+# Environment Values
+
+
+DISC_RAM={$DISC_RAM:-"disc"}
+MANAGER={$MANAGER:- 1}
+CLUSTERED={$CLUSTERD:- 0}
+MASTER_DOMAIN={$MASTER_DOMAIN:-"localpod"}
+
+if [[ $MANAGER == 1 ]];  then
+     rabbitmq-plugins enable rabbitmq_management rabbitmq_management_agent rabbitmq_shovel rabbitmq_shovel_management --offline
+     echo "Manager Setup" 
+elif; then
+      rabbitmq-plugins enable rabbitmq_management_agent rabbitmq_shovel --offline    
+     echo "Worker"
+# 
+      rabbitmqclt stop_app; rabbitmqclt join_cluster --${DISC_RAM} rabbit@${MASTER_DOMAIN} 
+      rabbitmqclt cluster_status; rabbitmqclt start_app
+fi
+
+
+
+
 
