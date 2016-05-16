@@ -7,7 +7,7 @@ fi
 
 
 USER=${RABBITMQ_USER:-"admin"}
-_word=${RABBITMQ_PASS:-"admin"}
+PASSWORD=${RABBITMQ_PASS:-"admin"}
 echo ""
 echo "=> Securing RabbitMQ with a ${_word} password"
 echo ""
@@ -33,10 +33,8 @@ cat > /etc/rabbitmq/rabbitmq.config <<EOF
 
 EOF
 
-
-# make rabbit own its own files
-chown -R rabbitmq:rabbitmq /var/lib/rabbitmq
-
+MASERT_PLUGINS="[rabbitmq_management,rabbitmq_management_agent,rabbitmq_shovel,rabbitmq_shovel_management]."
+AGENT_PLUGINS="[rabbitmq_management_agent,rabbitmq_shovel]."
 
 # Environment Values
 
@@ -46,18 +44,27 @@ MANAGER={$MANAGER:- 1}
 CLUSTERED={$CLUSTERD:- 0}
 MASTER_DOMAIN={$MASTER_DOMAIN:-"localpod"}
 
-if [[ $MANAGER == 1 ]];  then
-     rabbitmq-plugins enable rabbitmq_management rabbitmq_management_agent rabbitmq_shovel rabbitmq_shovel_management --offline
-     echo "Manager Setup" 
-elif; then
-      rabbitmq-plugins enable rabbitmq_management_agent rabbitmq_shovel --offline    
-     echo "Worker"
-# 
+  if [[ $MANAGER == 1 ]];  then
+     echo $MASERT_PLUGINS >> /etc/rabbitmq/enabled_plugins   
+#  rabbitmq-plugins enable rabbitmq_management rabbitmq_management_agent rabbitmq_shovel rabbitmq_shovel_management --offline
+  elif; then
+     echo $AGENT_PLUGINS >> /etc/rabbitmq/enabled_plugins
+#      rabbitmq-plugins enable rabbitmq_management_agent rabbitmq_shovel --offline    
       rabbitmqclt stop_app; rabbitmqclt join_cluster --${DISC_RAM} rabbit@${MASTER_DOMAIN} 
       rabbitmqclt cluster_status; rabbitmqclt start_app
-fi
+  fi
+
+#[{rabbitmq_management,
+#  [{listener, [{port,     15671},
+#               {ssl,      true},
+#               {ssl_opts, [{cacertfile, "/certs/cacert.pem"},
+#                           {certfile,   "/certs/cert.pem"},
+#                           {keyfile,    "/certs/key.pem"}]}
+#              ]}
+#  ]}
+#].
 
 
+# [TODO] add in suport to take a file used for adding users/policies vhosts etc. 
 
-
-
+#

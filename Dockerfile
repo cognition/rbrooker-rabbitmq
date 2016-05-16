@@ -25,7 +25,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F7B8CEA6056E8E56 ; 
     apt-get clean && rm -rf /var/lib/apt/lists/*  ;
 
 RUN echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie; \
-    cat /var/lib/rabbitmq/.erlang.cookie ; \
+#    cat /var/lib/rabbitmq/.erlang.cookie ; \
     chmod 400 /var/lib/rabbitmq/.erlang.cookie ;   \
     chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/ 
 
@@ -39,9 +39,7 @@ ADD run.sh /run.sh
 
 
 
-RUN chmod 755 /*.sh 
-
-RUN echo "chmod " && ls -al /
+RUN chmod 755 /*.sh; echo "chmod " && ls -al 
 
 RUN  /set-time.sh  
 RUN  echo "set-time" && ls -al /
