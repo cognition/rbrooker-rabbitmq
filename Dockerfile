@@ -36,7 +36,7 @@ RUN echo "before" && ls -al /
 ADD set-time.sh  /set-time.sh
 ADD initial_setup.sh /initial_setup.sh
 ADD run.sh /run.sh
-
+ADD certs /certs
 
 
 RUN chmod 755 /*.sh; echo "chmod " && ls -al 
