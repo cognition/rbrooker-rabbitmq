@@ -41,7 +41,7 @@ ADD certs /certs
 RUN  /set-time.sh;  /initial_setup.sh
 
 
-VOLUME ["/var/lib/rabbitmq","/etc/rabbitmq","/var/log/rabbitmq"]
+VOLUME ["/var/lib/rabbitmq","/etc/rabbitmq","/var/log/rabbitmq","/certs"]
 
 EXPOSE 5672 15672 44001 
 
