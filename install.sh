@@ -8,6 +8,7 @@ DOCKER_IMAGE=rbrooker/rabbitmq
 #
 ## ***************************  Variables you may want to Alter ***************************
 #
+ERLANG_COOKIE=
 NAME="rabbit"  
 PASSWD="admin"
 DOMAIN="bunny.hop"  	  # a local domain for clusting 
