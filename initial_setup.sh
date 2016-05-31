@@ -5,21 +5,21 @@ echo "Setting up the Initialization of RabbitMQ"
 #
 # Envriroment Variables
 #
-MASTER=0
-FED=0   
-SHOVEL=0
 #
-MASER=${MASTER:-0}
-FED=${FED:-0}
+MASTER=${MASTER:-0}
+FEDERATION=${FEDERATION:-0}
 SHOVEL=${SHOVEL:-0}
+CLUSTER_PORT=${CLUSTER_PORT:-44001}
+
 #
-# SSL support by defualt
-SSL=${SSL:-1}  
+# SSL support off by default
+SSL=${SSL:-0}  
 #
 if [ -f /.setup_done ]; then
 	echo "RabbitMQ Container Already Initialized"
-exit 0
+  exit 0
 fi
+
 #
 # Set up RabbitMQ Configurations
 USER=${RABBITMQ_USER:-"admin"}
@@ -45,8 +45,8 @@ if [ $SSL = 0 ]; then
                 ]
         },
  {kernel, [
-    {inet_dist_listen_max, 44001},
-    {inet_dist_listen_min, 44001},
+    {inet_dist_listen_max, $CLUSTER_PORT},
+    {inet_dist_listen_min, $CLUSTER_PORT},
     {net_ticktime,  120}
   ]}
 ].
@@ -91,31 +91,31 @@ fi
 
 
 # Federation Plugins
-MA_FED="rabbitmq_federation_management,rabbitmq_federation"
-FED_PLUGIN="rabbitmq_federation"
+MASTER_FEDERATION="rabbitmq_federation_management,rabbitmq_federation"
+FEDERATION_PLUGIN="rabbitmq_federation"
 
 # Shovel Plugins
-MA_SHOVEL="rabbitmq_shovel,rabbitmq_shovel_management"
+MASTER_SHOVEL="rabbitmq_shovel,rabbitmq_shovel_management"
 SHOVEL_PLUGIN="rabbitmq_shovel"
 
 # Management Console
-MA_CONSOLE="rabbitmq_management"
-PLUGINS="rabbitmq_management_agent"
+MASTER_CONSOLE="rabbitmq_management"
 
+PLUGINS="rabbitmq_management_agent"
 if [ $MASTER = 1 ]; then
-  PLUGINS=$PLUGINS,$MA_CONSOLE
+  PLUGINS+=$MASTER_CONSOLE
   if [ $SHOVEL = 1 ]; then
-    PLUGINS=$PLUGINS,$MA_SHOVEL
+    PLUGINS+=$MASTER_SHOVEL
   fi
-  if [ $FED = 1 ]; then
-    PLUGINS=$PLUGINS,$MA_FED
+  if [ $FEDERATION = 1 ]; then
+    PLUGINS+=$MASTER_FEDERATION
   fi
 else 
   if [ $SHOVEL = 1 ]; then
-    PLUGINS=$PLUGINS,$SHOVEL_PLUGIN
+    PLUGINS+=$SHOVEL_PLUGIN
   fi
-  if [ $FED = 1 ]; then
-    PLUGINS=$PLUGINS,$FED_PLUGIN
+  if [ $FEDERATION = 1 ]; then
+    PLUGINS+=$FEDERATION_PLUGIN
   fi
 fi
 
