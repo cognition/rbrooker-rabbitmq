@@ -1,32 +1,36 @@
 #!/bin/bash
-
+#
+echo "Setting up the Initialization of RabbitMQ"
+#
+#
 # Envriroment Variables
-
+#
 MASTER=0
 FED=0   
 SHOVEL=0
-
+#
 MASER=${MASTER:-0}
 FED=${FED:-0}
 SHOVEL=${SHOVEL:-0}
-
+#
 # SSL support by defualt
-SSL=${SSL:-1}  
-
+SSL=${SSL:-"1"}  
+#
 if [ -f /.setup_done ]; then
 	echo "RabbitMQ Container Already Initialized"
-	exit 0
+exit 0
 fi
-
+#
 # Set up RabbitMQ Configurations
 USER=${RABBITMQ_USER:-"admin"}
 PASSWORD=${RABBITMQ_PASS:-"admin"}
-
+#
 echo ""
-echo "=> Securing RabbitMQ with a ${_word} password"
+echo "=> Securing RabbitMQ with a password  -- ${PASSWORD} "
 echo ""
-
+#
 if [ $SSL = 0 ]; then 
+  echo "ssl added " 
   cat > /etc/rabbitmq/rabbitmq.config <<EOF
 [
  {rabbit, [
@@ -48,7 +52,8 @@ if [ $SSL = 0 ]; then
 ].
 
 EOF
-
+fi
+#
 if [ $SSL = 1 ]; then 
   echo "setting up RabbitMQ config with SSL support" 
   cat > /etc/rabbitmq/rabbitmq.config <<EOF
@@ -77,8 +82,12 @@ if [ $SSL = 1 ]; then
           {net_ticktime,  120}
     ]}
 ].
-
 EOF 
+
+else 
+  echo "Something when wrong" 
+fi
+
 
 # Federation Plugins
 MA_FED="rabbitmq_federation_management,rabbitmq_federation"
@@ -119,4 +128,3 @@ fi
 
 
 exit 0
-

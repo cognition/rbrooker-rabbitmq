@@ -14,13 +14,11 @@ ENV R_VERISON_MINOR=3.6.2-1
 RUN echo exit 1 > /usr/sbin/policy-rc.d; 
 RUN chmod +x /usr/sbin/policy-rc.d
 
-# Pull in all Nessary Files
-ADD rabbitmq-release-signing-key.asc /rabbitmq-release-signing-key.asc
-
+# Install Updates, and other needed prgms
 RUN apt-get update ; apt-get -y install logrotate wget apt-utils; apt-get -y upgrade
 
 
-# Install RabbitMQ and Updates
+# Install RabbitMQ
 RUN wget -O-  https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | apt-key add - 
 RUN echo 'deb http://www.rabbitmq.com/debian/ testing main' | tee /etc/apt/sources.list.d/rabbitmq.list
 RUN apt-get update; apt-get install -y rabbitmq-server=$R_VERISON_MINOR 
