@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Envriroment Variables
+
+MASTER=0
+FED=0   
+SHOVEL=0
+
+MASER=${MASTER:-0}
+FED=${FED:-0}
+SHOVEL=${SHOVEL:-0}
+
+
+
 if [ -f /.setup_done ]; then
 	echo "RabbitMQ Container Already Initialized"
 	exit 0
@@ -33,12 +45,44 @@ cat > /etc/rabbitmq/rabbitmq.config <<EOF
 
 EOF
 
-MASERT_PLUGINS="[rabbitmq_management,rabbitmq_management_agent,rabbitmq_shovel,rabbitmq_shovel_management]."
-#AGENT_PLUGINS="[rabbitmq_management_agent,rabbitmq_shovel]."
+
+# Federation Plugins
+MA_FED="rabbitmq_federation_management,rabbitmq_federation"
+FED_PLUGIN="rabbitmq_federation"
+
+# Shovel Plugins
+MA_SHOVEL="rabbitmq_shovel,rabbitmq_shovel_management"
+SHOVEL_PLUGIN="rabbitmq_shovel"
+
+# Management Console
+MA_CON="rabbitmq_management"
+PLUGINS="rabbitmq_management_agent"
+
+if [ $MASTER = 1 ]; then
+  PLUGINS=$PLUGINS,$MA_CON
+  if [ $SHOVEL = 1 ]; then
+    PLUGINS=$PLUGINS,$MA_SHOVEL
+  fi
+  if [ $FED = 1 ]; then
+    PLUGINS=$PLUGINS,$MA_FED
+  fi
+else 
+  if [ $SHOVEL = 1 ]; then
+    PLUGINS=$PLUGINS,$SHOVEL_PLUGIN
+  fi
+  if [ $FED = 1 ]; then
+    PLUGINS=$PLUGINS,$FED_PLUGIN
+  fi
+fi
 
 # Environment Values
 
-echo $MASERT_PLUGINS >> /etc/rabbitmq/enabled_plugins   
+echo "[$PLUGINS]." >> /etc/rabbitmq/enabled_plugins 
+
+if [ $MASTER = 0 ]; then 
+  export CLUSTER_AGENT=1
+fi
 
 
+exit 0
 

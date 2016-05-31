@@ -11,7 +11,7 @@ ENV ERLANG_COOKIE=${ERLANG_COOKIE:-BAI0VA7ROHXEOQUASH6AIRAGHE9NOH0EOQUAECIE}
 ENV R_VERISON_MINOR=3.6.1-1 
 
 # to allow updates to be installed
-#RUN echo exit 101 > /usr/sbin/policy-rc.d; chmod +x /usr/sbin/policy-rc.d
+RUN echo exit 101 > /usr/sbin/policy-rc.d; chmod +x /usr/sbin/policy-rc.d
 
 
 # Install RabbitMQ and Updates
@@ -35,6 +35,7 @@ RUN echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie; \
 ADD set-time.sh  /set-time.sh
 ADD initial_setup.sh /initial_setup.sh
 ADD run.sh /run.sh
+
 ADD certs /certs
 
 
