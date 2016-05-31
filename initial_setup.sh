@@ -99,11 +99,11 @@ MA_SHOVEL="rabbitmq_shovel,rabbitmq_shovel_management"
 SHOVEL_PLUGIN="rabbitmq_shovel"
 
 # Management Console
-MA_CON="rabbitmq_management"
+MA_CONSOLE="rabbitmq_management"
 PLUGINS="rabbitmq_management_agent"
 
 if [ $MASTER = 1 ]; then
-  PLUGINS=$PLUGINS,$MA_CON
+  PLUGINS=$PLUGINS,$MA_CONSOLE
   if [ $SHOVEL = 1 ]; then
     PLUGINS=$PLUGINS,$MA_SHOVEL
   fi
@@ -126,6 +126,11 @@ echo "[$PLUGINS]." > /etc/rabbitmq/enabled_plugins
 if [ $MASTER = 0 ]; then 
   export CLUSTER_AGENT=1
 fi
+
+touch /.setup_done
+echo "Setup is done" 
+
+
 
 
 exit 0

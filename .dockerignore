@@ -3,3 +3,7 @@
 LICENSE
 README.md
 install.sh
+test/
+test.sh
+docker_volume/
+

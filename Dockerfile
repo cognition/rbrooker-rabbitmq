@@ -19,8 +19,12 @@ RUN apt-get update ; apt-get -y install logrotate wget apt-utils; apt-get -y upg
 
 
 # Install RabbitMQ
+#RUN wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb; 
+#RUN dpkg -i erlang-solutions_1.0_all.deb
+RUN wget -O-  https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc | apt-key add -
 RUN wget -O-  https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | apt-key add - 
 RUN echo 'deb http://www.rabbitmq.com/debian/ testing main' | tee /etc/apt/sources.list.d/rabbitmq.list
+RUN echo 'deb https://packages.erlang-solutions.com/ubuntu xenial contrib' tee /etc/apt/sources.list.d/erlang.list
 RUN apt-get update; apt-get install -y rabbitmq-server=$R_VERISON_MINOR 
 
 # clean extra-files 
@@ -35,7 +39,6 @@ ADD initial_setup.sh /initial_setup.sh
 ADD set-time.sh  /set-time.sh
 ADD run.sh /run.sh
 
-RUN  /initial_setup.sh
 RUN  /set-time.sh
 
 
