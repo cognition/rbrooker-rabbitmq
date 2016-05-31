@@ -41,8 +41,7 @@ RUN  /set-time.sh
 
 VOLUME ["/var/lib/rabbitmq","/etc/rabbitmq","/var/log/rabbitmq","/testca","/server"]
 
-EXPOSE ["5672","15672","44001"]
+EXPOSE 5672 15672 44001
 
-#CMD ["/run.sh"]
-CMD ["bash"]
+CMD ["/run.sh"]
 

@@ -14,7 +14,7 @@ FED=${FED:-0}
 SHOVEL=${SHOVEL:-0}
 #
 # SSL support by defualt
-SSL=${SSL:-"1"}  
+SSL=${SSL:-1}  
 #
 if [ -f /.setup_done ]; then
 	echo "RabbitMQ Container Already Initialized"
@@ -31,7 +31,7 @@ echo ""
 #
 if [ $SSL = 0 ]; then 
   echo "ssl added " 
-  cat > /etc/rabbitmq/rabbitmq.config <<EOF
+  cat  > /etc/rabbitmq/rabbitmq.config <<"EOF"
 [
  {rabbit, [
                 {default_user, <<"$USER">>},
@@ -50,13 +50,13 @@ if [ $SSL = 0 ]; then
     {net_ticktime,  120}
   ]}
 ].
-
 EOF
+
 fi
 #
 if [ $SSL = 1 ]; then 
   echo "setting up RabbitMQ config with SSL support" 
-  cat > /etc/rabbitmq/rabbitmq.config <<EOF
+  cat > /etc/rabbitmq/rabbitmq.config <<"EOF"
 [
  {rabbit, [
               {default_user, <<"$USER">>},
@@ -82,7 +82,8 @@ if [ $SSL = 1 ]; then
           {net_ticktime,  120}
     ]}
 ].
-EOF 
+
+EOF
 
 else 
   echo "Something when wrong" 
@@ -120,7 +121,7 @@ fi
 
 # Environment Values
 
-echo "[$PLUGINS]." >> /etc/rabbitmq/enabled_plugins 
+echo "[$PLUGINS]." > /etc/rabbitmq/enabled_plugins 
 
 if [ $MASTER = 0 ]; then 
   export CLUSTER_AGENT=1
