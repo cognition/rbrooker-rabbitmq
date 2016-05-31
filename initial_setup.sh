@@ -10,22 +10,26 @@ MASER=${MASTER:-0}
 FED=${FED:-0}
 SHOVEL=${SHOVEL:-0}
 
-
+# SSL support by defualt
+SSL=${SSL:-1}  
 
 if [ -f /.setup_done ]; then
 	echo "RabbitMQ Container Already Initialized"
 	exit 0
 fi
 
-
+# Set up RabbitMQ Configurations
 USER=${RABBITMQ_USER:-"admin"}
 PASSWORD=${RABBITMQ_PASS:-"admin"}
+
 echo ""
 echo "=> Securing RabbitMQ with a ${_word} password"
 echo ""
-cat > /etc/rabbitmq/rabbitmq.config <<EOF
+
+if [ $SSL = 0 ]; then 
+  cat > /etc/rabbitmq/rabbitmq.config <<EOF
 [
-{rabbit, [
+ {rabbit, [
                 {default_user, <<"$USER">>},
                 {default_pass, <<"$PASSWORD">>},
                 {tcp_listeners, [{"0.0.0.0", 5672}]},
@@ -45,6 +49,36 @@ cat > /etc/rabbitmq/rabbitmq.config <<EOF
 
 EOF
 
+if [ $SSL = 1 ]; then 
+  echo "setting up RabbitMQ config with SSL support" 
+  cat > /etc/rabbitmq/rabbitmq.config <<EOF
+[
+ {rabbit, [
+              {default_user, <<"$USER">>},
+              {default_pass, <<"$PASSWORD">>},
+              {vm_memory_high_watermark,0.5 },
+              {vm_memory_high_watermark_paging_ratio,0.6 },
+              {disk_free_limit,500000000},
+              {cluster_partition_handling,pause_minority},
+              {delegate_count,32},
+              {tcp_listeners, [{"0.0.0.0", 5672}]},
+              {ssl_listeners, [{"0.0.0.0", 5671}]},
+              {ssl_options, [
+                  {cacertfile,"/testca/cacert.pem"},
+                  {certfile,"/server/cert.pem"},
+                  {keyfile,"/server/key.pem"},
+                  {verify,verify_peer},
+                  {fail_if_no_peer_cert,false}
+              ]}
+          ]},
+    {kernel,[
+          {inet_dist_listen_max, 44001},
+          {inet_dist_listen_min, 44001},
+          {net_ticktime,  120}
+    ]}
+].
+
+EOF 
 
 # Federation Plugins
 MA_FED="rabbitmq_federation_management,rabbitmq_federation"
