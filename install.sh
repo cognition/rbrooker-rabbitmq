@@ -66,10 +66,10 @@ HOST_VOL_CERTS="/opt/certs"
 
 #  ************************************   don't alter below ******************************
 
-
-ETC_VOLS="--volume ${HOST_VOL_ETC}:/etc/rabbitmq "
-LOG_VOLS="--volume ${HOST_VOL_LOGS}:/var/log/rabbitmq "
-SSL_VOLS="--volume ${HOST_VOL_CERTS}:/certs "
+# for CentOS 
+ETC_VOLS="--volume ${HOST_VOL_ETC}:/etc/rabbitmq:Z "
+LOG_VOLS="--volume ${HOST_VOL_LOGS}:/var/log/rabbitmq:Z "
+SSL_VOLS="--volume ${HOST_VOL_CERTS}:/certs:Z "
 
 
 OPTIONS=""

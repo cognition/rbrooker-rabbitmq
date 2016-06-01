@@ -9,7 +9,7 @@ echo "Setting up the Initialization of RabbitMQ"
 MASTER=${MASTER:-0}
 FEDERATION=${FEDERATION:-0}
 SHOVEL=${SHOVEL:-0}
-CLUSTER_PORT=${CLUSTER_PORT:-44001}
+
 
 #
 # SSL support off by default
@@ -45,8 +45,8 @@ if [ $SSL = 0 ]; then
                 ]
         },
  {kernel, [
-    {inet_dist_listen_max, $CLUSTER_PORT},
-    {inet_dist_listen_min, $CLUSTER_PORT},
+    {inet_dist_listen_max, 44001},
+    {inet_dist_listen_min, 44001},
     {net_ticktime,  120}
   ]}
 ].
@@ -91,17 +91,17 @@ fi
 
 
 # Federation Plugins
-MASTER_FEDERATION="rabbitmq_federation_management,rabbitmq_federation"
-FEDERATION_PLUGIN="rabbitmq_federation"
+MASTER_FEDERATION=",rabbitmq_federation_management,rabbitmq_federation"
+FEDERATION_PLUGIN=",rabbitmq_federation"
 
 # Shovel Plugins
-MASTER_SHOVEL="rabbitmq_shovel,rabbitmq_shovel_management"
-SHOVEL_PLUGIN="rabbitmq_shovel"
+MASTER_SHOVEL=",rabbitmq_shovel,rabbitmq_shovel_management"
+SHOVEL_PLUGIN=",rabbitmq_shovel"
 
 # Management Console
-MASTER_CONSOLE="rabbitmq_management"
+MASTER_CONSOLE=",rabbitmq_management"
 
-PLUGINS="rabbitmq_management_agent"
+PLUGINS="rabbitmq_management_agent "
 if [ $MASTER = 1 ]; then
   PLUGINS+=$MASTER_CONSOLE
   if [ $SHOVEL = 1 ]; then
@@ -130,7 +130,7 @@ fi
 touch /.setup_done
 echo "Setup is done" 
 
-
+echo "$PLUGINS $FEDERATION $SHOVEL" >> /output 
 
 
 exit 0

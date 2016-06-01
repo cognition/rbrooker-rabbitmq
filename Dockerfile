@@ -31,7 +31,11 @@ RUN apt-get update; apt-get install -y rabbitmq-server=$R_VERISON_MINOR
 RUN  apt-get autoremove -y ; apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
-RUN echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie; chmod 400 /var/lib/rabbitmq/.erlang.cookie ; chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/
+RUN echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie; \
+    chmod 400 /var/lib/rabbitmq/.erlang.cookie ; \
+    chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/  ; \
+    chown -R rabbitmq:rabbitmq /var/log/rabbitmq
+
 
 ADD testca/ /testca
 ADD server/ /server
@@ -42,9 +46,9 @@ ADD run.sh /run.sh
 RUN  /set-time.sh
 
 
-VOLUME ["/var/lib/rabbitmq","/etc/rabbitmq","/var/log/rabbitmq","/testca","/server"]
+VOLUME ["/etc/rabbitmq","/var/log/rabbitmq","/testca","/server"]
 
 EXPOSE 5672 15672 44001
 
-CMD ["/run.sh"]
-
+#CMD ["/run.sh"]
+CMD ["bash"]
