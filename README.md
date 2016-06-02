@@ -105,5 +105,5 @@ Maintained by
 Ramon Brooker <rbrooker@aetherealmind.com>
 
 
-
+[![GetBadges Game](https://cognition-rbrooker-rabbitmq.getbadges.io/shield/company/cognition-rbrooker-rabbitmq/user/5992)](https://cognition-rbrooker-rabbitmq.getbadges.io/?ref=shield-player)
 
