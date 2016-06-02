@@ -37,7 +37,7 @@ RUN chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/
 
 
 
-ADD testca/ /testca
+
 ADD server/ /server
 ADD initial_setup.sh /initial_setup.sh
 ADD set-time.sh  /set-time.sh
