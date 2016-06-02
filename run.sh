@@ -1,5 +1,6 @@
 #!/bin/bash
 
+chown -R rabbitmq:rabbitmq  /var/log/rabbitmq
 
 /bin/sh -c /initial_setup.sh 
 

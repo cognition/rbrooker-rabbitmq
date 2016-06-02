@@ -127,10 +127,12 @@ if [ $MASTER = 0 ]; then
   export CLUSTER_AGENT=1
 fi
 
+
+
+
+echo "ls -l /var/log/"
+
 touch /.setup_done
 echo "Setup is done" 
-
-echo "$PLUGINS $FEDERATION $SHOVEL" >> /output 
-
 
 exit 0

@@ -10,6 +10,9 @@ DOCKER_IMAGE=rbrooker/rabbitmq
 #
 
 RABBIT_VERSION="3.6.2-1"
+#RABBIT_VERSION="latest"
+
+
 
 NAME="roger"  
 
@@ -21,7 +24,7 @@ RABBITMQ_PASS="admin"
 
 
 
-HOST_VOL_DIR_ROOT="/opt/${NAME}"   # host directory path for mounting key guest directories 
+HOST_VOL_DIR_ROOT="/opt/docker/${NAME}"   # host directory path for mounting key guest directories 
 
 # Exposed Ports 
 # Change only if you want to expose non-standard ports 
@@ -31,7 +34,7 @@ CLUSTER_PORT=44001
 
 # Plugins Shovel or Federation or Both
 SHOVEL=1
-FEDERATION=0
+FEDERATION=1
 AUTO_RESTART=1
 
 
@@ -98,7 +101,10 @@ if [ $AUTO_RESTART = 1 ]; then
     RESTART="--restart=\"always\" "
 fi
 
+sudo mkdir -p  ${HOST_VOL_DIR_ROOT} ; sudo mkdir -p ${HOST_VOL_ETC} ; sudo mkdir -p ${HOST_VOL_LOGS}
+# To allow mounting of the Drive
+sudo chcon -Rt svirt_sandbox_file_t ${HOST_VOL_DIR_ROOT}  
 
-echo "docker run -it -d $ETC_VOLS $LOG_VOLS $NAME $HOSTNAME $OPTIONS $RESTART ${DOCKER_IMAGE}:${RABBIT_VERSION} " 
+echo " docker run -it -d $ETC_VOLS $LOG_VOLS $NAME $HOSTNAME $OPTIONS $RESTART ${DOCKER_IMAGE}:${RABBIT_VERSION} "
 
 exit 0
