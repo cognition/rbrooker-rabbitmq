@@ -69,7 +69,7 @@ if [ $SSL = 1 ]; then
               {tcp_listeners, [{"0.0.0.0", 5672}]},
               {ssl_listeners, [{"0.0.0.0", 5671}]},
               {ssl_options, [
-                  {cacertfile,"/testca/cacert.pem"},
+                  {cacertfile,"/server/cacert.pem"},
                   {certfile,"/server/cert.pem"},
                   {keyfile,"/server/key.pem"},
                   {verify,verify_peer},

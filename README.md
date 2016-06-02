@@ -8,26 +8,64 @@ Usage
 ```
 docker run -d -it \
     -v /opt/rabbitmq/rabbit/etc:/etc/rabbitmq  \
-    -v /opt/rabbitmq/rabbit/var:/var/lib/rabbitmq \ 
     -v /opt/rabbitmq/rabbit/log:/var/log/rabbitmq \
-    -v /opt/rabbitmq/certs/<yourServerKey>:/server \
-    -v /opt/rabbitmq/certs/<yourCAcert>:/testca \
     --hostname=rabbit  \
     --name=rabbit  \
-    -p 5672:5672 -p 15672:15672 -p 5671:5671 \
-    -e RABBITMQ_PASS=admin   \
-    -e RABBITMQ_USE_LONGNAME=true \ 
+    -p 5672:5672 -p 15672:15672 -p 5671:5671 \ 
     -e HOSTNAME=rabbit.bunny.hop \ 
-    -e RABBITMQ_PASS=admin 
-    -e CLUSTERED=0 rbrooker/rabbitmq:2
-    -e SHOVEL=1, -e FED=1, MASTER=1
+    -e RABBITMQ_PASS=admin \
+    -e RABBITMQ_USER=admin \
+    -e CLUSTERED=0 \
+    -e SSL=1 \
+    -e SHOVEL=1 \
+    -e FED=1\
+    -e MASTER=1 \
+    rbrooker/rabbitmq:3.6.2-1 
+
+```
+### Notes about SSL 
+I used the SSL Cert creation from http://www.rabbitmq.com/ssl.html
+
+Please remember to mount to your own volumes with your own keys the ones I'm using are dummy self signed
+I suggest make a docker volume to store your certificates
+```
+docker volume create --name my-cert-volume
+docker run -v my-cert-volume:/server --name cert-container /bin/true 
+docker cp certs/* cert-container:/server/ 
+docker volume inspect my-cert-volume | grep Mountpoint
+# from the information found in the above -- most likely similar
+sudo ls /var/lib/docker/volumes/my-cert-volume/_data/
 ```
 
-I used the SSL Cert creation from 
-http://www.rabbitmq.com/ssl.html
-Please remeber to mount to your own volumes with your own keys, or substitue them in and build your own from the source: 
-example: 
+## Start run/create an instance 
+```
+docker run -d -it \
+   -v /opt/rabbitmq/rabbit/etc:/etc/rabbitmq  \
+   -v /opt/rabbitmq/rabbit/log:/var/log/rabbitmq \
+   --volumes-from cert-container:ro \
+   --hostname=rabbit  \
+   --name=rabbit  \
+   -p 5672:5672 -p 15672:15672 -p 5671:5671 \ 
+   -e HOSTNAME=rabbit.bunny.hop \ 
+   -e RABBITMQ_PASS=admin \
+   -e RABBITMQ_USER=admin \
+   -e CLUSTERED=0 \
+   -e SSL=1 \
+   -e SHOVEL=1 \
+   -e FED=1 \
+   -e MASTER=1 \
+  rbrooker/rabbitmq:3.6.2-1 
+```
+### Note assumption for volume cert directory structure 
+/server/cacert.pem 
+/server/cert.pem
+/server/key.pem
 
+
+
+
+
+###  to Bake them in for your own local registry
 ```
 git clone https://github.com/cognition/rbrooker-rabbitmq my-rabbitmq 
 cd my-rabbitmq
