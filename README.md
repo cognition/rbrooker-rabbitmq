@@ -30,7 +30,7 @@ Please remember to mount to your own volumes with your own keys the ones I'm usi
 I suggest make a docker volume to store your certificates
 ```
 docker volume create --name my-cert-volume
-docker run -v my-cert-volume:/server --name cert-container /bin/true 
+docker run -v my-cert-volume:/server --name cert-container ubuntu /bin/true 
 docker cp certs/* cert-container:/server/ 
 docker volume inspect my-cert-volume | grep Mountpoint
 # from the information found in the above -- most likely similar
