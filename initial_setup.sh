@@ -31,7 +31,7 @@ echo ""
 #
 if [ $SSL = 0 ]; then 
   echo "ssl added " 
-  cat  > /etc/rabbitmq/rabbitmq.config <<"EOF"
+  cat  > /etc/rabbitmq/rabbitmq.config <<EOF
 [
  {rabbit, [
                 {default_user, <<"$USER">>},
@@ -56,11 +56,11 @@ fi
 #
 if [ $SSL = 1 ]; then 
   echo "setting up RabbitMQ config with SSL support" 
-  cat > /etc/rabbitmq/rabbitmq.config <<"EOF"
+  cat > /etc/rabbitmq/rabbitmq.config <<EOF
 [
  {rabbit, [
-              {default_user, <<"$USER">>},
-              {default_pass, <<"$PASSWORD">>},
+              {default_user, <<"${USER}">>},
+              {default_pass, <<"${PASSWORD}">>},
               {vm_memory_high_watermark,0.5 },
               {vm_memory_high_watermark_paging_ratio,0.6 },
               {disk_free_limit,500000000},
