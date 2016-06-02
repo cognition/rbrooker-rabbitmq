@@ -1,7 +1,14 @@
 RabbitMQ 
 =====================
 
-Base docker image to run a RabbitMQ server version 3.6.2-1
+RabbitMQ v 3.6.2-1 
+* RabbitMQ Project
+* Erlang Solutions 
+Optional
+* SSL
+* Shovel
+* Federation
+
 
 Usage
 -----
