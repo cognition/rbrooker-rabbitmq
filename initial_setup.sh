@@ -15,6 +15,8 @@ SHOVEL=${SHOVEL:-0}
 # SSL support off by default
 SSL=${SSL:-0}  
 #
+
+# Check if this is a restart
 if [ -f /.setup_done ]; then
 	echo "RabbitMQ Container Already Initialized"
   exit 0
@@ -31,7 +33,7 @@ echo ""
 #
 if [ $SSL = 0 ]; then 
   echo "ssl added " 
-  cat  > /etc/rabbitmq/rabbitmq.config <<"EOF"
+  cat  > /etc/rabbitmq/rabbitmq.config <<EOF
 [
  {rabbit, [
                 {default_user, <<"$USER">>},
@@ -56,7 +58,7 @@ fi
 #
 if [ $SSL = 1 ]; then 
   echo "setting up RabbitMQ config with SSL support" 
-  cat > /etc/rabbitmq/rabbitmq.config <<"EOF"
+  cat > /etc/rabbitmq/rabbitmq.config <<EOF
 [
  {rabbit, [
               {default_user, <<"$USER">>},
