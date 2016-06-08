@@ -61,8 +61,8 @@ if [ $SSL = 1 ]; then
   cat > /etc/rabbitmq/rabbitmq.config <<EOF
 [
  {rabbit, [
-              {default_user, <<"$USER">>},
-              {default_pass, <<"$PASSWORD">>},
+              {default_user, <<"${USER}">>},
+              {default_pass, <<"${PASSWORD}">>},
               {vm_memory_high_watermark,0.5 },
               {vm_memory_high_watermark_paging_ratio,0.6 },
               {disk_free_limit,500000000},
