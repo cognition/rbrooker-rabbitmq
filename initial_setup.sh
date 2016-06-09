@@ -131,9 +131,6 @@ fi
 
 
 
-
-echo "ls -l /var/log/"
-
 touch /.setup_done
 echo "Setup is done" 
 
