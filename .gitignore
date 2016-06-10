@@ -1,6 +1,5 @@
 *.swp
 ~*
 *~
-test.sh
 certs/*
-testca/
+private/*

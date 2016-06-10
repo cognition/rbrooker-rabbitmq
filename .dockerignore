@@ -3,8 +3,7 @@
 LICENSE
 README.md
 install.sh
-test/
-test.sh
+test*
 docker_volume/
-testca/
+Docker-Compose.yml
 
