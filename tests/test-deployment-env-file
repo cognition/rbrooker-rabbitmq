@@ -1,0 +1,10 @@
+# Environment File for use in the contianer 
+
+HOSTNAME="rabbit.bunny.hop" 
+RABBITMQ_PASS="admin" 
+RABBITMQ_USER="admin" 
+CLUSTERED=0 
+SSL=1 
+SHOVEL=0 
+FED=1 
+MASTER=1 

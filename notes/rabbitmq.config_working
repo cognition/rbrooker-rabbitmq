@@ -1,17 +1,22 @@
 #!/bin/bash
 
 
-# 3.6.2-1 Config 
+
+echo "Setting up the Initialization of RabbitMQ"
+#
+#
+# Envriroment Variables
+#
+#
+MASTER=${MASTER:-0}
+FEDERATION=${FEDERATION:-0}
+SHOVEL=${SHOVEL:-0}
+CLUSTER=${CLUSTER:-0}
+HOSTNAME=${HOSTNAME:-""}
 
 
+echo "setting up RabbitMQ with " 
 
-
-
-
-
-
-
-echo "setting up RabbitMQ config with SSL support" 
 cat > /etc/rabbitmq/rabbitmq.config <<EOF
 
 
