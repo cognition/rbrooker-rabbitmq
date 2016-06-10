@@ -1,4 +1,4 @@
-RabbitMQ 
+RabbitMQ      -- NOT FOR PRODUCTION  
 =====================
 
 RabbitMQ v 3.6.2-1 
