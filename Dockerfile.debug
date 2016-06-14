@@ -32,6 +32,10 @@ RUN  apt-get autoremove -y ; apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie; chmod 400 /var/lib/rabbitmq/.erlang.cookie; chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/ 
 
 
+ENV CLUSTER=0 NODE_TYPE="disc" CLUSTER_NODE_NAME="" FILE_NAME="" 
+
+
+
 ADD src/ /
 
 RUN  /set-time.sh
