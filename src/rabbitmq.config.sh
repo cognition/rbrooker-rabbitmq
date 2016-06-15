@@ -269,9 +269,8 @@ cat > rabbitmq.config <<EOF
    %% to nodes that have just been reset or started for the first time.
    %% See http://www.rabbitmq.com/clustering.html#auto-config for
    %% further details.
-   %%
-   {cluster_nodes, {['${CLUSTER_NODE}'], ${NODE_TYPE}}},
-
+  
+   %%SUB_CLUSTER_NODE_DETAILS_HERE
 
    %% Interval (in milliseconds) at which we send keepalive messages
    %% to other cluster members. Note that this is not the same thing
@@ -439,3 +438,19 @@ cat > rabbitmq.config <<EOF
 
 EOF
 
+
+if [ CLUSTER = 1 ] ; then
+  for i in "${CLUSTER_NODE_NAMES[@]}"
+  do
+    
+    {cluster_nodes, {['$i'], ${NODE_TYPE}}},
+  done
+
+fi 
+
+
+
+
+
+
+exit 0
