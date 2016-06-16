@@ -9,16 +9,10 @@ cat > rabbitmq.config.0 <<EOF
 [
  {rabbit,
   [
-     {tcp_listeners, [{"${AMQP_IP_LISTEN}", ${AMQP_TCP_PORT} },
-                       {"${AMQP_IP_LISTEN_6}",${AMQP_TCP_PORT} }
-                      ]
-      },
-      {ssl_listeners, [{"${SSL_AMQP_IP_LISTEN}",${SSL_TCP_PORT} },
-                       {"${SSL_AMQP_IP_LISTEN_6}",${SSL_TCP_PORT}}
-                      ]
-      },
-      {num_tcp_acceptors, ${NUM_TCP_ACCEPTORS} },
-      {num_ssl_acceptors, ${NUM_SSL_ACCEPTORS} },
+      {tcp_listeners, [{"${AMQP_IP_LISTEN}", ${AMQP_TCP_PORT}}]},
+      {ssl_listeners, [{"${SSL_AMQP_IP_LISTEN}",${SSL_TCP_PORT}}]},
+      {num_tcp_acceptors, ${NUM_TCP_ACCEPTORS}},
+      {num_ssl_acceptors, ${NUM_SSL_ACCEPTORS}},
       {log_levels, [${LOG_LEVEL}]},
       {reverse_dns_lookups, ${REVERSE_DNS_LOOKUPS}},
       {ssl_options, [
@@ -51,9 +45,9 @@ cat > rabbitmq.config.0 <<EOF
        {channel_max, ${CHANNEL_MAX}},
        {vm_memory_high_watermark,${VM_MEM_HIGHT_WATERMARK}},
        {vm_memory_high_watermark_paging_ratio, ${VM_MEM_HIGHT_WATERMARK_PAGING_RATIO}},
-       {memory_monitor_interval, ${MEM_MONITOR_INTERVAL} },
-       {disk_free_limit, {mem_relative, ${DISK_FREE_LIMIT_MEM_RELATIVE} } },
-       {cluster_partition_handling,${CLUSTER_PARTITION_HANDLING} }, 
+       {memory_monitor_interval, ${MEM_MONITOR_INTERVAL}},
+       {disk_free_limit, {mem_relative, ${DISK_FREE_LIMIT_MEM_RELATIVE}}},
+       {cluster_partition_handling,${CLUSTER_PARTITION_HANDLING}}, 
        %%SUB_CLUSTER_NODE_DETAILS_HERE 
        {cluster_keepalive_interval, ${CLUSTER_KEEPALIVE_INTERVAL}},
        {collect_statistics, none}
@@ -65,9 +59,9 @@ cat > rabbitmq.config.0 <<EOF
  %% ----------------------------------------------------------------------------
  {kernel,
   [
-    {net_ticktime,${NET_TICKTIME} },
-    {inet_dist_listen_max, ${ERLANG_KERNEL_PORT_MAX} },
-    {inet_dist_listen_min, ${ERLANG_KERNEL_PORT_MIN} } 
+    {net_ticktime,${NET_TICKTIME}},
+    {inet_dist_listen_max, ${ERLANG_KERNEL_PORT_MAX}},
+    {inet_dist_listen_min, ${ERLANG_KERNEL_PORT_MIN}} 
   ]
  },
  %% ----------------------------------------------------------------------------
@@ -75,11 +69,11 @@ cat > rabbitmq.config.0 <<EOF
  %% ----------------------------------------------------------------------------
  {rabbitmq_management,
   [
- %%  {load_definitions,"${LOAD_DEFINITIONS}" },
-   {http_log_dir, "${HTTP_ACCESS_LOG_PATH}" },
+ %%  {load_definitions,"${LOAD_DEFINITIONS}"},
+   {http_log_dir, "${HTTP_ACCESS_LOG_PATH}"},
    {listener, [ {port,  ${MANAGEMENT_PORT}},
                 {ip,   "${MANAGEMENT_IP}"},
-                {ssl,   ${SSL} },
+                {ssl,   ${SSL}},
                 {ssl_opts, 
                   [{cacertfile,"${CACERTFILE}"},
                    {certfile,"${CERTFILE}"},
