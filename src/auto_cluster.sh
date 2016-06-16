@@ -1,9 +1,6 @@
 #!/bin/bash
 # 
 
-echo $CLUSTER_NODE_NAMES
-
-
     OIFS="$IFS"
     IFS=','
     read -a NODES <<< "${CLUSTER_NODE_NAMES}"
@@ -31,6 +28,6 @@ echo $CLUSTER_NODE_NAMES
 cluster_nodes="{cluster_node, {[$disc], disc},{[$ram],ram}},"
 
 echo $cluster_nodes
-sed -e "s/%%SUB_CLUSTER_NODE_DETAILS_HERE/${cluster_nodes}/" rabbitmq.config > rabbitmq.config-1
+sed -e "s/%%SUB_CLUSTER_NODE_DETAILS_HERE/${cluster_nodes}/" /rabbitmq.config.0 > /etc/rabbitmq/rabbitmq.config
 
-exit 0
+exit $?
