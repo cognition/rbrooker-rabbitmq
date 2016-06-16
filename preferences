@@ -1,0 +1,10 @@
+# set APT repo priorities for using Erlang and Rabbit from source repos
+
+Package: erlang*
+Pin: origin packages.erlang-solutions.com/ubuntu
+Pin-Priority: 600
+
+
+Package: rabbit*
+Pin: origin www.rabbitmq.com/debian/
+Pin-Priority: 600
