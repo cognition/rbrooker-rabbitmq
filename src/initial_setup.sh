@@ -43,7 +43,7 @@ echo "setup config"
 # set up configuration using another script
 /bin/bash /rabbitmq.config.sh
 
-if [ $CLUSTER_AGENT = 1 ]; then 
+if [ $CLUSTER = 1 ]; then 
 /bin/bash /auto_cluster.sh
 else
   mv rabbitmq.config.0 /etc/rabbitmq/rabbitmq.config
