@@ -1,33 +1,32 @@
-RabbitMQ      -- NOT FOR PRODUCTION  
+RabbitMQ      -- PLEASE TEST -- 
 =====================
 
-RabbitMQ v 3.6.2-1 
-* RabbitMQ Project
-* Erlang Solutions 
+I created this project because the other RabbitMQ Docker containers (at the time I started this) didn't have any fine grained control or the ability to add plugins, and adjust the configuration away from default. 
+
+I have populated the variables with defaults values, some I left alone, whereas on others I have altered based on bias, and due to figuring out in my own experimentation, and reading several blogs/articles etc. on the subject. 
+
+Please see the wiki for details and sample installations 
+
+
+### RabbitMQ v 3.6.2-1 
+* [RabbitMQ Project](http://www.rabbitmq.com/download.html)
+* [Erlang Solutions](https://www.erlang-solutions.com/resources/download.html)
+
 Optional
 * SSL
 * Shovel
 * Federation
 
 
-Usage
+### Basic Usage
 -----
 ```
 docker run -d -it \
-    -v /opt/rabbitmq/rabbit/etc:/etc/rabbitmq  \
-    -v /opt/rabbitmq/rabbit/log:/var/log/rabbitmq \
-    --hostname=rabbit  \
+    --hostname=bunny.hop  \
     --name=rabbit  \
     -p 5672:5672 -p 15672:15672 -p 5671:5671 \ 
-    -e HOSTNAME=rabbit.bunny.hop \ 
-    -e RABBITMQ_PASS=admin \
-    -e RABBITMQ_USER=admin \
-    -e CLUSTERED=0 \
     -e SSL=1 \
-    -e SHOVEL=1 \
-    -e FED=1\
-    -e MASTER=1 \
-    rbrooker/rabbitmq:3.6.2-1 
+    rbrooker/rabbitmq:latest
 
 ```
 ### Notes about SSL 
@@ -47,27 +46,15 @@ sudo ls /var/lib/docker/volumes/my-cert-volume/_data/
 ## Start run/create an instance 
 ```
 docker run -d -it \
-   -v /opt/rabbitmq/rabbit/etc:/etc/rabbitmq  \
-   -v /opt/rabbitmq/rabbit/log:/var/log/rabbitmq \
    --volumes-from cert-container:ro \
-   --hostname=rabbit  \
+   --hostname=bunny.hop  \
    --name=rabbit  \
    -p 5672:5672 -p 15672:15672 -p 5671:5671 \ 
-   -e HOSTNAME=rabbit.bunny.hop \ 
-   -e RABBITMQ_PASS=admin \
-   -e RABBITMQ_USER=admin \
-   -e CLUSTERED=0 \
    -e SSL=1 \
-   -e SHOVEL=1 \
-   -e FED=1 \
-   -e MASTER=1 \
-  rbrooker/rabbitmq:3.6.2-1 
+  rbrooker/rabbitmq:latest
 ```
-### Environment Variables 
-I have open access to most environment variables; so they can be inserted at run. 
-The full list of them can be found in ```tests/environemental_vars```   
-as well as in the Wiki
-
+###  
+See the [Wiki](https://github.com/cognition/rbrooker-rabbitmq/wiki) for more advanced details. 
 
 ### Note assumption for volume cert directory structure 
 /server/cacert.pem 
@@ -75,10 +62,6 @@ as well as in the Wiki
 /server/key.pem
 
 
-
-
-
-###  to Bake them in for your own local registry
 ```
 git clone https://github.com/cognition/rbrooker-rabbitmq my-rabbitmq 
 cd my-rabbitmq
