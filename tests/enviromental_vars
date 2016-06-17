@@ -1,5 +1,5 @@
 export AMQP_IP_LISTEN="0.0.0.0"
-export AMQP_IP_LISTEN_6="::"
+
 export AMQP_TCP_PORT="5672"
 export AUTH_BACKENDS="[rabbit_auth_backend_internal,rabbitmq_auth_mechanism_ssl]"
 export AUTH_MECHANISMS="['PLAIN','AMQPLAIN','EXTERNAL']"
@@ -36,7 +36,7 @@ export PASSWORD="admin"
 export REVERSE_DNS_LOOKUPS="false"
 export SSL="true"
 export SSL_AMQP_IP_LISTEN="0.0.0.0"
-export SSL_AMQP_IP_LISTEN_6="::"
+
 export SSL_CERT_LOGIN_FROM="common_name"
 export SSL_CIPHER="[{rsa,aes_256_cbc,sha256}]"
 export SSL_HANDSHAKE_TIMEOUT="5000"
