@@ -63,6 +63,12 @@ docker run -d -it \
    -e MASTER=1 \
   rbrooker/rabbitmq:3.6.2-1 
 ```
+### Environment Variables 
+I have open access to most environment variables; so they can be inserted at run. 
+The full list of them can be found in ```tests/environemental_vars```   
+as well as in the Wiki
+
+
 ### Note assumption for volume cert directory structure 
 /server/cacert.pem 
 /server/cert.pem

@@ -11,9 +11,6 @@ cat > rabbitmq.config.0 <<EOF
   [
       {tcp_listeners, [{"${AMQP_IP_LISTEN}", ${AMQP_TCP_PORT}}]},
       {ssl_listeners, [{"${SSL_AMQP_IP_LISTEN}",${SSL_TCP_PORT}}]},
-      %% IPv6 References have been removed untill the bugs with the Erlang Libs RabbitMQ 
-      %% requires have fixed the issues with referencing both IPv4 and IPv6 in the same config 
-      %% pointing at the same object.
       {num_tcp_acceptors, ${NUM_TCP_ACCEPTORS}},
       {num_ssl_acceptors, ${NUM_SSL_ACCEPTORS}},
       {log_levels, [${LOG_LEVEL}]},

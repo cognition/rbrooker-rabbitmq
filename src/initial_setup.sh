@@ -49,6 +49,10 @@ else
   mv rabbitmq.config.0 /etc/rabbitmq/rabbitmq.config
 fi
 
+echo "Set the Erlang Cookie"
+echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie
+chmod 400 /var/lib/rabbitmq/.erlang.cookie  
+chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/
 
 
 touch /.setup_done
