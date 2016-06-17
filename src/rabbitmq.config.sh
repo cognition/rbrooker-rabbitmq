@@ -72,7 +72,7 @@ cat > rabbitmq.config.0 <<EOF
  %% ----------------------------------------------------------------------------
  {rabbitmq_management,
   [
- %%  {load_definitions,"${LOAD_DEFINITIONS}"},
+ %%LOAD_DEFINITIONS_HERE
    {http_log_dir, "${HTTP_ACCESS_LOG_PATH}"},
    {listener, [ {port,  ${MANAGEMENT_PORT}},
                 {ip,   "${MANAGEMENT_IP}"},

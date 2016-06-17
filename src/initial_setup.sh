@@ -55,6 +55,14 @@ chmod 400 /var/lib/rabbitmq/.erlang.cookie
 chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/
 
 
+if [ ! $LOAD_DEFINITIONS = 'nil' ]; then
+  
+ sed -e "s/%%LOAD_DEFINITIONS_HERE/{load_definitions,\"${LOAD_DEFINITIONS}\"/" /etc/rabbitmq/rabbitmq.config > /etc/rabbitmq/rabbitmq.config.0
+ mv  /etc/rabbitmq/rabbitmq.config.0 /etc/rabbitmq/rabbitmq.config
+fi
+
+
+
 touch /.setup_done
 echo "Setup is done" 
 
