@@ -1,8 +1,9 @@
 #!/bin/bash
 
 chown -R rabbitmq:rabbitmq  /var/log/rabbitmq
-
-/bin/sh -c /initial_setup.sh 
+if [ ! -f /.setup_done ] ; then 
+  /bin/bash /initial_setup.sh 
+fi
 echo "  ##############################  "
 echo "Starting Container RabbitMQ " 
 echo "    $(date -u +%Y-%m-%d_%Hh%M_UTC) "

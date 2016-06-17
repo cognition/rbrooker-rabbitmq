@@ -3,7 +3,13 @@
 LICENSE
 README.md
 install.sh
-test*
 docker_volume/
 Docker-Compose.yml
-
+*.debug
+*.prod
+tests/
+TODO.md
+private/
+build-container.sh 
+*~
+~*
