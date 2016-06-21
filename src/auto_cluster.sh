@@ -1,6 +1,6 @@
 #!/bin/bash
 # 
-
+echo "RUNNING AUTOCLUSTER"
     OIFS="$IFS"
     IFS=','
     read -a NODES <<< "${CLUSTER_NODE_NAMES}"
@@ -25,7 +25,14 @@
         fi
         ((++i))
       done
-cluster_nodes="{cluster_node,[{[$disc], disc},{[$ram],ram}]},"
+      echo "sub time"
+      echo "$ram"
+      echo "$disc"
+      echo  ""
+#cluster_nodes="{cluster_node,[{[$disc], disc},{[$ram],ram}]},"
+
+cluster_nodes="{cluster_node,[{[$disc], disc}]},"
+
 
 echo $cluster_nodes
 sed -e "s/%%SUB_CLUSTER_NODE_DETAILS_HERE/${cluster_nodes}/" /rabbitmq.config.0 > /etc/rabbitmq/rabbitmq.config

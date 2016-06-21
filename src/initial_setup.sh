@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 echo "Setting up the Initialization of RabbitMQ"
 #
@@ -36,14 +36,18 @@ fi
 echo "[$PLUGINS]." > /etc/rabbitmq/enabled_plugins 
 
 if [ $MASTER = 0 ]; then 
-  export CLUSTER_AGENT=1
+  CLUSTER_AGENT=1
 fi
 
 echo "setup config"
 # set up configuration using another script
 /bin/bash /rabbitmq.config.sh
+echo "setup config -- end"
 
-if [ $CLUSTER = 1 ]; then 
+echo "$CLUSTER_AGENT, $MASTER"
+
+
+if [ $CLUSTER_AGENT = 1 ]; then 
 /bin/bash /auto_cluster.sh
 else
   mv rabbitmq.config.0 /etc/rabbitmq/rabbitmq.config
