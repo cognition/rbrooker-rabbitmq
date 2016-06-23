@@ -37,6 +37,7 @@ services:
       - MASTER_NAME=master
       - FEDERATION=1
       - MASTER=1
+      - CLUSTER_AGENT=1
       - NODE_TYPE=disc
     volumes:
       - ./rabbit/logs:/var/log/rabbitmq
