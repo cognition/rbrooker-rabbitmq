@@ -1,7 +1,7 @@
 #!/bin/bash 
 
-echo "setting up RabbitMQ with " 
 
+echo "++ rabbitmq.config.sh ++"
 cat > rabbitmq.config.0 <<EOF
                                       
 %% -*- mode: erlang -*-
@@ -51,7 +51,9 @@ cat > rabbitmq.config.0 <<EOF
        {memory_monitor_interval, ${MEM_MONITOR_INTERVAL}},
        {disk_free_limit, {mem_relative, ${DISK_FREE_LIMIT_MEM_RELATIVE}}},
        {cluster_partition_handling,${CLUSTER_PARTITION_HANDLING}}, 
+
        %%SUB_CLUSTER_NODE_DETAILS_HERE 
+
        {cluster_keepalive_interval, ${CLUSTER_KEEPALIVE_INTERVAL}},
        {collect_statistics, none}
   ]},
@@ -72,7 +74,8 @@ cat > rabbitmq.config.0 <<EOF
  %% ----------------------------------------------------------------------------
  {rabbitmq_management,
   [
- %%LOAD_DEFINITIONS_HERE
+   %%LOAD_DEFINITIONS_HERE
+
    {http_log_dir, "${HTTP_ACCESS_LOG_PATH}"},
    {listener, [ {port,  ${MANAGEMENT_PORT}},
                 {ip,   "${MANAGEMENT_IP}"},
@@ -88,7 +91,7 @@ cat > rabbitmq.config.0 <<EOF
   ]
  }
 ].
-
 EOF
 
+echo "-- rabbitmq.config --" 
 exit $?

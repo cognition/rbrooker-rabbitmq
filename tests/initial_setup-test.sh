@@ -10,7 +10,9 @@ PWD="$HOME/REPO/rbrooker-rabbitmq/tests"
 echo " Envriroment Variables "
 source $PWD/enviromental_vars
 echo "check if Env are loading" 
-
+sleep 1
+echo "override values"
+source $PWD/new_values
 
 
 echo "Enable Chosen Plugins"
@@ -44,21 +46,47 @@ PLUGINS="rabbitmq_management_agent"
       fi
     fi
 
-# Environment Values
-
+echo "PLUGINS"
 echo $PLUGINS 
-
+echo ""
 echo "[$PLUGINS]." > enabled_plugins 
 # for test mode
+echo ""
+echo "MASTER = $MASTER ;; CLUSTER_AGENT = $CLUSTER_AGENT"
+if [ $MASTER = 0 ]; then 
+    CLUSTER_AGENT=1
+fi
+echo "CLUSTER_AGENT = $CLUSTER_AGENT"
+
 
 echo "setup config"
-# set up configuration using another script
-/bin/bash $HOME/REPO/rbrooker-rabbitmq/tests/rabbitmq.config-test.sh
 
+echo "set up configuration using another script" 
+/bin/bash rabbitmq.config-test.sh
+echo "done setup other" 
+
+
+echo ""
+if [ ! $LOAD_DEFINITIONS = 'nil' ]; then
+
+LOAD_DEFINITIONS="{load_definitions,\"$LOAD_DEFINITIONS\"},"
+
+   echo ""
+   sed -i -e  "s|%%LOAD_DEFINITIONS_HERE|${LOAD_DEFINITIONS}|g" rabbitmq.config.0 
+
+fi
+
+echo "" 
+echo ""
 if [ $CLUSTER_AGENT = 1 ]; then
   echo $CLUSTER_NODE_NAMES
+  echo "autocluster"
   /bin/bash $HOME/REPO/rbrooker-rabbitmq/tests/auto_cluster-test.sh
+  echo "autocluster out"
+else
+ echo "mv rabbitmq.config.0 rabbitmq.config.final "
 fi
+
 
 touch ${PWD}/.setup_done
 echo "Setup is done" 

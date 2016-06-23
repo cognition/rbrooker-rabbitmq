@@ -1,7 +1,6 @@
 #!/bin/bash 
 
 echo "setting up RabbitMQ with " 
-
 cat > rabbitmq.config.0 <<EOF
                                       
 %% -*- mode: erlang -*-
@@ -70,6 +69,7 @@ cat > rabbitmq.config.0 <<EOF
  {rabbitmq_management,
   [
  %%  {load_definitions,"${LOAD_DEFINITIONS}"},
+ %%LOAD_DEFINITIONS_HERE
    {http_log_dir, "${HTTP_ACCESS_LOG_PATH}"},
    {listener, [ {port,  ${MANAGEMENT_PORT}},
                 {ip,   "${MANAGEMENT_IP}"},
@@ -87,5 +87,5 @@ cat > rabbitmq.config.0 <<EOF
 ].
 
 EOF
-
+echo "done rabbit.config-test"
 exit $?

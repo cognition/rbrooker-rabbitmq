@@ -25,7 +25,7 @@ docker run -d -it \
     --hostname=bunny.hop  \
     --name=rabbit  \
     -p 5672:5672 -p 15672:15672 -p 5671:5671 \ 
-    -e SSL=1 \
+    -e SSL="false" \
     rbrooker/rabbitmq:latest
 
 ```
@@ -50,7 +50,7 @@ docker run -d -it \
    --hostname=bunny.hop  \
    --name=rabbit  \
    -p 5672:5672 -p 15672:15672 -p 5671:5671 \ 
-   -e SSL=1 \
+   -e SSL="true"\
   rbrooker/rabbitmq:latest
 ```
 ###  
@@ -86,7 +86,16 @@ Notes
 -----
 
 Currently I am not able to get more than two rabbitmq nodes active in a cluster. 
-I am working on this and hopefully be updating soon. 
+
+
+
+Common Gatachas
+---------------
+
+``` SSL=0 ``` should be ```SSL="false" ```
+``` SSL=1 ``` should be ```SSL="true" ```
+
+
 
 Maintained by  
 -------------
@@ -96,3 +105,5 @@ Ramon Brooker <rbrooker@aetherealmind.com>
 
 [![GetBadges Game](https://cognition-rbrooker-rabbitmq.getbadges.io/shield/company/cognition-rbrooker-rabbitmq/user/5992)](https://cognition-rbrooker-rabbitmq.getbadges.io/?ref=shield-player)
 
+
+ 

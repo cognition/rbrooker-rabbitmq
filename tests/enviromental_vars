@@ -1,5 +1,7 @@
-export AMQP_IP_LISTEN="0.0.0.0"
+# Default Values
 
+
+export AMQP_IP_LISTEN="0.0.0.0"
 export AMQP_TCP_PORT="5672"
 export AUTH_BACKENDS="[rabbit_auth_backend_internal,rabbitmq_auth_mechanism_ssl]"
 export AUTH_MECHANISMS="['PLAIN','AMQPLAIN','EXTERNAL']"
@@ -7,7 +9,7 @@ export CACERTFILE="/server/cacert.pem"
 export CERTFILE="/server/cert.pem"
 export CHANNEL_MAX="128"
 export CLUSTER_KEEPALIVE_INTERVAL="10000"
-export CLUSTER_NODE="rabbit@${other_host_name}"
+#export CLUSTER_NODE="rabbit@${other_host_name}"
 export CLUSTER_PARTITION_HANDLING="autoheal"
 export DEFAULT_USER_TAG="['administrator']"
 export DEFAULT_VHOST="/"
@@ -29,14 +31,12 @@ export MANAGEMENT_PORT="15672"
 export MEM_MONITOR_INTERVAL="2500"
 export MESSAGE_TTL="36000"
 export NET_TICKTIME="120"
-export NODE_TYPE="disc"
 export NUM_SSL_ACCEPTORS="1"
 export NUM_TCP_ACCEPTORS="10"
 export PASSWORD="admin"
 export REVERSE_DNS_LOOKUPS="false"
-export SSL="true"
+export SSL="false"
 export SSL_AMQP_IP_LISTEN="0.0.0.0"
-
 export SSL_CERT_LOGIN_FROM="common_name"
 export SSL_CIPHER="[{rsa,aes_256_cbc,sha256}]"
 export SSL_HANDSHAKE_TIMEOUT="5000"
@@ -47,8 +47,8 @@ export VM_MEM_HIGHT_WATERMARK="0.5"
 export VM_MEM_HIGHT_WATERMARK_PAGING_RATIO="0.6"
 
 export MASTER=1
-export FEDERATION=1
+export FEDERATION=0
 export SHOVEL=0
 
-export CLUSTER_AGENT=1
+export CLUSTER_AGENT=0
 export CLUSTER_NODE_NAMES="'rabbit@node1','rabbit@node2','rabbit@node3','rabbit@node0'"

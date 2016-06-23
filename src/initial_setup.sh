@@ -2,7 +2,7 @@
 #
 echo "Setting up the Initialization of RabbitMQ"
 #
-
+echo " ++ initial_setup ++" 
 echo "Enable Chosen Plugins"
 # Federation Plugins
 MASTER_FEDERATION=",rabbitmq_federation_management,rabbitmq_federation"
@@ -34,24 +34,86 @@ else
 fi
 
 echo "[$PLUGINS]." > /etc/rabbitmq/enabled_plugins 
+echo "plugin choices loaded"
 
 if [ $MASTER = 0 ]; then 
   CLUSTER_AGENT=1
 fi
 
-echo "setup config"
-# set up configuration using another script
+# sub default, and custom ENV vars in first pass of rabbitmq.config
 /bin/bash /rabbitmq.config.sh
-echo "setup config -- end"
+echo "first config written"
 
-echo "$CLUSTER_AGENT, $MASTER"
+if [ ! $LOAD_DEFINITIONS = 'nil' ]; then
+  LOAD_DEFINITIONS="{load_definitions,\"$LOAD_DEFINITIONS\"},"
+  sed -i -e  "s|%%LOAD_DEFINITIONS_HERE|${LOAD_DEFINITIONS}|g" rabbitmq.config.0 
+fi
 
 
 if [ $CLUSTER_AGENT = 1 ]; then 
-/bin/bash /auto_cluster.sh
-else
-  mv rabbitmq.config.0 /etc/rabbitmq/rabbitmq.config
+#/bin/bash /auto_cluster.sh
+echo "autocluster"
+echo $CLUSTER_NODE_NAMES
+OIFS="$IFS"
+IFS=','
+read -a NODES <<< "${CLUSTER_NODE_NAMES}"
+IFS="$OIFS"
+i=0
+disc='nil'
+ram='nil'
+for node in "${NODES[@]}"
+  do
+  echo "$node"
+    if [ $(($i % 2)) -eq 0 ]; then
+    if [ $disc = 'nil' ]; then 
+      echo "@@@@@@"
+      disc=\'$node\'
+      echo "$disc"
+      echo "@@@@@@"
+    else
+      echo "!!!!!!"
+      disc="$disc,\'$node\'"
+      echo "$disc"
+      echo "!!!!!!"
+    fi
+  else
+    if [ $ram = 'nil' ]; then
+     echo "((((((("
+      echo "$ram"
+      ram=\'$node\'
+      echo "((((("
+    else
+      echo ")))))"
+      ram="$ram,\'$node\'"
+      echo "$ram"
+      echo ")))))"
+    fi
+  fi
+    ((++i))
+done
+  if [ $ram = 'nil' ]; then
+    echo "******"
+    cluster_nodes="{cluster_node, {[$disc], disc}},"
+    echo "******"
+  elif [ $disc = 'nil' ] && !  [ $ram = 'nil' ] 
+  then
+    echo "#####"
+    cluster_nodes="{cluster_node, {[$ram],ram}},"
+    echo "#####"
+  else
+    echo "^^^^"
+    cluster_nodes="{cluster_node, {[$disc], disc},{[$ram],ram}},"
+    echo "^^^^"
+  fi
+  echo $cluster_nodes
+  echo "&&&&&&&&"
+  sed -i -e 's|%%SUB_CLUSTER_NODE_DETAILS_HERE|'"${cluster_nodes}"'|g' rabbitmq.config.0
+  echo "&&&&&&&&" 
+  echo "autocluster -- end"
+
 fi
+
+cp rabbitmq.config.0 /etc/rabbitmq/rabbitmq.config
 
 echo "Set the Erlang Cookie"
 echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie
@@ -59,15 +121,10 @@ chmod 400 /var/lib/rabbitmq/.erlang.cookie
 chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/
 
 
-if [ ! $LOAD_DEFINITIONS = 'nil' ]; then
-  
- sed -e "s/%%LOAD_DEFINITIONS_HERE/{load_definitions,\"${LOAD_DEFINITIONS}\"/" /etc/rabbitmq/rabbitmq.config > /etc/rabbitmq/rabbitmq.config.0
- mv  /etc/rabbitmq/rabbitmq.config.0 /etc/rabbitmq/rabbitmq.config
-fi
-
-
-
 touch /.setup_done
+echo ""
 echo "Setup is done" 
+echo ""
+echo " -- initial_setup --" 
 
 exit $?

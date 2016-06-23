@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/bash -x 
 # 
-echo "RUNNING AUTOCLUSTER"
+echo "++ autocluster ++"
+
     OIFS="$IFS"
     IFS=','
     read -a NODES <<< "${CLUSTER_NODE_NAMES}"
@@ -25,16 +26,16 @@ echo "RUNNING AUTOCLUSTER"
         fi
         ((++i))
       done
-      echo "sub time"
-      echo "$ram"
-      echo "$disc"
-      echo  ""
-#cluster_nodes="{cluster_node,[{[$disc], disc},{[$ram],ram}]},"
+if [ $ram = 'nil' ]; then
+      cluster_nodes="{cluster_node, {[$disc], disc}},"
+elif [ $disc = 'nil' && ! $ram = 'nil']; then
+      cluster_nodes="{cluster_node, {[$ram],ram}},"
+else
+      cluster_nodes="{cluster_node, {[$disc], disc},{[$ram],ram}},"
+fi
 
-cluster_nodes="{cluster_node,[{[$disc], disc}]},"
+sed -i -e "s|%%SUB_CLUSTER_NODE_DETAILS_HERE|${cluster_nodes}|g" rabbitmq.config.0
+echo "-- autocluster  --"
 
-
-echo $cluster_nodes
-sed -e "s/%%SUB_CLUSTER_NODE_DETAILS_HERE/${cluster_nodes}/" /rabbitmq.config.0 > /etc/rabbitmq/rabbitmq.config
 
 exit $?
