@@ -1,0 +1,57 @@
+version: '2'
+services: 
+  rabbit-master:
+    image: rbrooker/rabbitmq:latest
+    container_name: ma
+    hostname: "master"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./rabbit/etc:/etc/rabbitmq
+      - ./rabbit/logs:/var/log/rabbitmq
+    environment:
+      - FEDERATION=1
+  rabbit-ram:
+    image: rbrooker/rabbitmq:latest
+    ports:
+      - "6672:5672"    
+    links:
+      - rabbit-master:master
+    container_name: saram
+    environment:
+      - MASTER_NAME=master
+      - FEDERATION=1
+      - MASTER=0
+      - NODE_TYPE=ram
+    volumes:
+      - ./rabbit/logs:/var/log/rabbitmq
+  rabbit-disc-m:
+    image: rbrooker/rabbitmq:latest
+    ports:
+      - "7672:5672"    
+    links:
+      - rabbit-master:master
+    container_name: samdisc
+    environment:
+      - MASTER_NAME=master
+      - FEDERATION=1
+      - MASTER=1
+      - NODE_TYPE=disc
+    volumes:
+      - ./rabbit/logs:/var/log/rabbitmq
+  rabbit-disc:
+    image: rbrooker/rabbitmq:latest
+    ports:
+      - "8672:5672"    
+    links:
+      - rabbit-master:master
+    container_name: sadisc
+    environment:
+      - MASTER_NAME=master
+      - FEDERATION=1
+      - MASTER=0
+      - NODE_TYPE=disc
+    volumes:
+      - ./rabbit/logs:/var/log/rabbitmq
+  
