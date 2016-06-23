@@ -73,6 +73,9 @@ docker build -t my-rabbitmq:0 -t my-rabbitmq .
 Usage with a Cluster 
 ---------------------
 
+pull the docker-compose.yml file, and run:  
+```docker-compose up ```
+
 See the [Wiki Clustering](https://github.com/cognition/rbrooker-rabbitmq/wiki/Clustering) 
 
 
