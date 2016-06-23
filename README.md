@@ -84,9 +84,11 @@ Common Gatachas
 ``` SSL=1 ``` should be ```SSL="true" ```
 
 Cert directory structure: 
-/server/cacert.pem \r
-/server/cert.pem \r
-/server/key.pem \r
+/server/cacert.pem
+
+/server/cert.pem
+
+/server/key.pem
 
 
 
