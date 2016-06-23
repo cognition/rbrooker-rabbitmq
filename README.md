@@ -56,11 +56,6 @@ docker run -d -it \
 ###  
 See the [Wiki](https://github.com/cognition/rbrooker-rabbitmq/wiki) for more advanced details. 
 
-### Note assumption for volume cert directory structure 
-/server/cacert.pem 
-/server/cert.pem
-/server/key.pem
-
 
 ```
 git clone https://github.com/cognition/rbrooker-rabbitmq my-rabbitmq 
@@ -77,15 +72,8 @@ docker build -t my-rabbitmq:0 -t my-rabbitmq .
 
 Usage with a Cluster 
 ---------------------
-[TO UPDATE] -- not tested with changes -- see install.sh in the github repo 
-https://github.com/cognition/rbrooker-rabbitmq
 
-
-
-Notes 
------
-
-Currently I am not able to get more than two rabbitmq nodes active in a cluster. 
+See the [Wiki Clustering](https://github.com/cognition/rbrooker-rabbitmq/wiki/Clustering) 
 
 
 
@@ -94,6 +82,11 @@ Common Gatachas
 
 ``` SSL=0 ``` should be ```SSL="false" ```
 ``` SSL=1 ``` should be ```SSL="true" ```
+
+Cert directory structure: 
+/server/cacert.pem \r
+/server/cert.pem \r
+/server/key.pem \r
 
 
 
