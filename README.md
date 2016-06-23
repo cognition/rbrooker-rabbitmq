@@ -83,10 +83,10 @@ Common Gatachas
 ``` SSL=0 ``` should be ```SSL="false" ```
 ``` SSL=1 ``` should be ```SSL="true" ```
 
-Cert directory structure: 
-/server/cacert.pem \r
-/server/cert.pem \r
-/server/key.pem \r
+Cert directory structure:     
+/server/cacert.pem     
+/server/cert.pem    
+/server/key.pem   
 
 
 
