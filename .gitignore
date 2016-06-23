@@ -8,3 +8,5 @@ tests/enabled_plugins
 notes/errs/
 tests/rabbitmq.config.0
 tests/rabbitmq.config
+tests/misc/
+

@@ -1,0 +1,27 @@
+#export AMQP_IP_LISTEN="127.0.0.1"
+#export AMQP_TCP_PORT="9090"
+#export CLUSTER_NODE="rabbit@${other_host_name}"
+export DEFAULT_VHOST="default_host"
+
+#export ERLANG_KERNEL_PORT_MAX="44060"
+#export ERLANG_KERNEL_PORT_MIN="44030"
+#export HTTP_ACCESS_LOG_PATH="/logs/access.log"
+
+export NODE_TYPE="ram"
+#export LOAD_DEFINITIONS="/custom_configs/schema.json"
+export MASTER_NAME="rabbit-master"
+export LOG_LEVEL="{connection,error},{channel,warning},{federation,warning}"
+export PASSWORD="admin"
+export SSL="false"
+export USER="admin"
+export MASTER=1
+#export FEDERATION=1
+#export SHOVEL=0
+export CLUSTER_AGENT=1
+
+#export CLUSTER_NODE_NAMES="'rabbit@node1','rabbit@node2','rabbit@node3','rabbit@node0'"
+
+
+#export CLUSTER_NODE_NAMES="'rabbit@node0','rabbit@node2'"
+
+
