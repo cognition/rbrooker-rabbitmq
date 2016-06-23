@@ -52,7 +52,7 @@ echo ""
 echo "[$PLUGINS]." > enabled_plugins 
 # for test mode
 echo ""
-echo "MASTER = $MASTER ;; CLUSTER_AGENT = $CLUSTER_AGENT"
+echo "MASTER = $MASTER_NAME ;; CLUSTER_AGENT = $CLUSTER_AGENT"
 if [ $MASTER = 0 ]; then 
     CLUSTER_AGENT=1
 fi
@@ -75,18 +75,18 @@ LOAD_DEFINITIONS="{load_definitions,\"$LOAD_DEFINITIONS\"},"
    sed -i -e  "s|%%LOAD_DEFINITIONS_HERE|${LOAD_DEFINITIONS}|g" rabbitmq.config.0 
 
 fi
-
+echo "mv rabbitmq.config.0 rabbitmq.config.final "
 echo "" 
+echo "/usr/bin/rabbitmq-server start &"
 echo ""
+
 if [ $CLUSTER_AGENT = 1 ]; then
-  echo $CLUSTER_NODE_NAMES
+  echo $MASTER_NAME
   echo "autocluster"
   /bin/bash $HOME/REPO/rbrooker-rabbitmq/tests/auto_cluster-test.sh
   echo "autocluster out"
-else
- echo "mv rabbitmq.config.0 rabbitmq.config.final "
 fi
-
+echo "/usr/bin/rabbitmq-server stop"
 
 touch ${PWD}/.setup_done
 echo "Setup is done" 

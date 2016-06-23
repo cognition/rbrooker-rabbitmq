@@ -9,7 +9,6 @@ export CACERTFILE="/server/cacert.pem"
 export CERTFILE="/server/cert.pem"
 export CHANNEL_MAX="128"
 export CLUSTER_KEEPALIVE_INTERVAL="10000"
-#export CLUSTER_NODE="rabbit@${other_host_name}"
 export CLUSTER_PARTITION_HANDLING="autoheal"
 export DEFAULT_USER_TAG="['administrator']"
 export DEFAULT_VHOST="/"
@@ -45,10 +44,10 @@ export SSL_VERSION="['tlsv1.2']"
 export USER="admin"
 export VM_MEM_HIGHT_WATERMARK="0.5"
 export VM_MEM_HIGHT_WATERMARK_PAGING_RATIO="0.6"
-
+export MASTER_NAME='nil'
+export NODE_TYPE="disc"
 export MASTER=1
 export FEDERATION=0
 export SHOVEL=0
-
 export CLUSTER_AGENT=0
-export CLUSTER_NODE_NAMES="'rabbit@node1','rabbit@node2','rabbit@node3','rabbit@node0'"
+
