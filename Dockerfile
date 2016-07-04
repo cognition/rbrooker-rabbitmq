@@ -2,7 +2,7 @@ FROM ubuntu
 MAINTAINER Ramon Brooker <rbrooker@aetherealmind.com>
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV R_VERISON_MINOR="3.6.2-1"
+ENV RABBITMQ_VERSION="3.6.2-1"
 
 # for setting
 LABEL rabbit_version.major="3.6" \
@@ -28,7 +28,7 @@ RUN echo "deb http://www.rabbitmq.com/debian/ testing main" | tee /etc/apt/sourc
 RUN echo "deb https://packages.erlang-solutions.com/ubuntu/ xenial contrib" | tee /etc/apt/sources.list.d/erlang.list 
 # Ensure APT installs from the proper repos
 ADD preferences /etc/apt/preferences  
-RUN apt-get update; apt-get install -y rabbitmq-server=$R_VERISON_MINOR
+RUN apt-get update; apt-get install -y rabbitmq-server=$RABBITMQ_VERSION
 
 # clean extra-files 
 RUN  apt-get autoremove -y ; apt-get clean && rm -rf /var/lib/apt/lists/*

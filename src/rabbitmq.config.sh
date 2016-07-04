@@ -1,4 +1,7 @@
 #!/bin/bash 
+# Written By: Ramon Brooker <rbrooker@aetherealmind.com>
+# (c) 2016
+
 
 
 echo "++ rabbitmq.config.sh ++"

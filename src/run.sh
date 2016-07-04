@@ -1,4 +1,8 @@
 #!/bin/bash
+# Written By: Ramon Brooker <rbrooker@aetherealmind.com>
+# (c) 2016
+
+
 
 chown -R rabbitmq:rabbitmq  /var/log/rabbitmq
 if [ ! -f /.setup_done ] ; then 

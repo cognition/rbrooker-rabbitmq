@@ -1,5 +1,11 @@
 #!/bin/bash -x
 #
+# Written By: Ramon Brooker <rbrooker@aetherealmind.com>
+# (c) 2016
+
+
+
+
 echo "Setting up the Initialization of RabbitMQ"
 #
 echo " ++ initial_setup ++" 
