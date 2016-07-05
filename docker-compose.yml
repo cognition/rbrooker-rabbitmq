@@ -1,12 +1,12 @@
 # Written By: Ramon Brooker <rbrooker@aetherealmind.com>
 # # (c) 2016
 #
-# 
+# version 3.5.7
 
 version: '2'
 services: 
   rabbit-master:
-    image: rbrooker/rabbitmq:latest
+    image: rbrooker/rabbitmq:3.5.7
     container_name: ma
     hostname: "master"
     ports:
@@ -18,7 +18,7 @@ services:
     environment:
       - FEDERATION=1
   rabbit-ram:
-    image: rbrooker/rabbitmq:latest
+    image: rbrooker/rabbitmq:3.5.7
     ports:
       - "6672:5672"    
     links:
@@ -32,7 +32,7 @@ services:
     volumes:
       - ./rabbit/logs:/var/log/rabbitmq
   rabbit-disc-m:
-    image: rbrooker/rabbitmq:latest
+    image: rbrooker/rabbitmq:3.5.7
     ports:
       - "7672:5672"    
     links:
@@ -46,7 +46,7 @@ services:
     volumes:
       - ./rabbit/logs:/var/log/rabbitmq
   rabbit-disc:
-    image: rbrooker/rabbitmq:latest
+    image: rbrooker/rabbitmq:3.5.7
     ports:
       - "8672:5672"    
     links:
