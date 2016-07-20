@@ -1,4 +1,4 @@
-RabbitMQ      -- PLEASE TEST -- 
+RabbitMQ
 =====================
 
 I created this project because the other RabbitMQ Docker containers (at the time I started this) didn't have any fine grained control or the ability to add plugins, and adjust the configuration away from default. 
@@ -8,7 +8,7 @@ I have populated the variables with defaults values, some I left alone, whereas 
 Please see the wiki for details and sample installations 
 
 
-### RabbitMQ v 3.6.2-1 
+### RabbitMQ v 3.6.3-1 
 * [RabbitMQ Project](http://www.rabbitmq.com/download.html)
 * [Erlang Solutions](https://www.erlang-solutions.com/resources/download.html)
 
