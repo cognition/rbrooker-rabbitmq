@@ -30,7 +30,7 @@ RUN echo "deb http://www.rabbitmq.com/debian/ testing main" | tee /etc/apt/sourc
 RUN echo "deb https://packages.erlang-solutions.com/ubuntu/ xenial contrib" | tee /etc/apt/sources.list.d/erlang.list 
 # Ensure APT installs from the proper repos
 ADD preferences /etc/apt/preferences  
-RUN apt-get update; apt-get install -y rabbitmq-server=$RABBITMQ_VERSION erlang-nox=$ERLANG_VERSION
+RUN apt-get update; apt-get install -y rabbitmq-server=$RABBITMQ_VERSION esl-erlang=$ERLANG_VERSION
 
 # clean extra-files 
 RUN  apt-get autoremove -y ; apt-get clean && rm -rf /var/lib/apt/lists/*
