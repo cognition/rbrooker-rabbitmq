@@ -2,12 +2,12 @@ FROM ubuntu
 MAINTAINER Ramon Brooker <rbrooker@aetherealmind.com>
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV RABBITMQ_VERSION="3.6.4-1" ERLANG_VERSION="18.3-1"
+ENV RABBITMQ_VERSION="3.6.4-1" ERLANG_VERSION="1:18.3-1"
 
 # for setting
 LABEL rabbit_version.major="3.6" \
       rabbit_version.minor="3.6.4-1" \
-      erlang_version="18.3-1"
+      erlang_version="1:18.3-1"
 
 
 # IPv6 Env have been removed untill the support for IPv6 is stable in Erlang
