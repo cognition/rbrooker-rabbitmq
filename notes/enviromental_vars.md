@@ -68,6 +68,13 @@ I have created another page with the most common variables you will want to alte
 +  MANAGEMENT_IP     "0.0.0.0"
 +  MANAGEMENT_PORT     "15672"
 +  HTTP_ACCESS_LOG_PATH     "/logs/access.log"
++  COLLECT_STATISTICS_INTERVAL  6000
++  CORS_ALLOWED_ORIGINS   [""]
++  CORS_MAX_AGE  3600
++  Statistic Retention {MaxAgeInSeconds, SampleEveryNSeconds}
+++ GLOBAL  [{605,5}]
+++ BASIC   [{}]
+++ DETAILED [{5,5}]
 
 This Var is IMPORTANT you attach a Volume or Bind Directory 
 that holds a copy of your exported configurations from the Management console, 
