@@ -6,7 +6,7 @@
 version: '2'
 services: 
   bigwig:
-    image: rbrooker/rabbitmq:3.6.4-1
+    image: rbrooker/rabbitmq:latest
     container_name: bigwig
     hostname: "bigwig"
     ports:
@@ -21,16 +21,15 @@ services:
       - LOG_LEVEL="{connection,error},{channel,error},{federation,error}" 
       - SSL="false"
   hazel:
-    image: rbrooker/rabbitmq:3.6.4-1
+    image: rbrooker/rabbitmq:latest
     ports:
-      - "6672:6672"    
+      - "26672:26672"    
     links:
       - bigwig:bigwig
     container_name: hazel
     hostname: "hazel"
     environment:
-      - AMQP_TCP_PORT=6672
-      - SSL_TCP_PORT=6671
+      - AMQP_TCP_PORT=26672
       - MASTER_NAME=bigwig
       - FEDERATION=1
       - MASTER=0
@@ -39,16 +38,15 @@ services:
     volumes:
       - ./rabbit/logs:/var/log/rabbitmq
   fiver:
-    image: rbrooker/rabbitmq:3.6.4-1
+    image: rbrooker/rabbitmq:latest
     ports:
-      - "7672:7672"    
+      - "27672:27672"    
     links:
       - bigwig:bigwig
     container_name: fiver
     hostname: "fiver"
     environment:
-      - AMQP_TCP_PORT=7672
-      - SSL_TCP_PORT=7671
+      - AMQP_TCP_PORT=27672
       - MASTER_NAME=bigwig
       - MASTER=0
       - FEDERATION=1
@@ -56,9 +54,9 @@ services:
     volumes:
       - ./rabbit/logs:/var/log/rabbitmq
   lord-frith:
-    image: rbrooker/rabbitmq:3.6.4-1
+    image: rbrooker/rabbitmq:latest
     ports:
-      - "8672:8672"    
+      - "28672:28672"    
       - "18672:18672"
     links:
       - bigwig:bigwig
@@ -67,9 +65,7 @@ services:
     container_name: lord-frith
     hostname: "lord-frith"
     environment:
-      - AMQP_TCP_PORT=8672
-      - SSL_TCP_PORT=8671
-      - MANAGEMENT_PORT=18572
+      - AMQP_TCP_PORT=28672
       - MASTER_NAME=bigwig
       - FEDERATION=1
       - MASTER=1
