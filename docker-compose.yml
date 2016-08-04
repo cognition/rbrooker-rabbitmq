@@ -57,7 +57,7 @@ services:
     image: rbrooker/rabbitmq:latest
     ports:
       - "28672:28672"    
-      - "18672:18672"
+      - "18672:15672"
     links:
       - bigwig:bigwig
       - fiver:fiver
