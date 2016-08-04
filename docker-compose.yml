@@ -18,7 +18,6 @@ services:
     environment:
       - FEDERATION=1
       - LOG_LEVEL="{connection,error},{channel,error},{federation,error}"
-      - SSL="false"
   hazel:
     image: rbrooker/rabbitmq:latest
     ports:

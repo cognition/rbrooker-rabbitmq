@@ -82,8 +82,8 @@ cat > rabbitmq.config.0 <<EOF
    %% {collect_statistics_interval, $COLLECT_STATISTICS_INTERVAL},
    {http_log_dir, "${HTTP_ACCESS_LOG_PATH}"},
    {listener, [ {port,  ${MANAGEMENT_PORT}},
-                {ip,   "${MANAGEMENT_IP}"},
-                {ssl,   ${SSL}}
+                {ip,   "${MANAGEMENT_IP}"}
+%%                {ssl,   ${SSL}},
 %%                {ssl_opts, 
 %%                  [{cacertfile,"${CACERTFILE}"},
 %%                   {certfile,"${CERTFILE}"},
