@@ -1,10 +1,10 @@
 # Written By: Ramon Brooker <rbrooker@aetherealmind.com>
 # # (c) 2016
 #
-# 
+
 
 version: '2'
-services: 
+services:
   bigwig:
     image: rbrooker/rabbitmq:latest
     container_name: bigwig
@@ -15,62 +15,37 @@ services:
     volumes:
       - ./rabbit/etc:/etc/rabbitmq
       - ./rabbit/logs:/var/log/rabbitmq
-      - ./rabbit-config-volume:/custom_config
     environment:
       - FEDERATION=1
-      - LOG_LEVEL="{connection,error},{channel,error},{federation,error}" 
+      - LOG_LEVEL="{connection,error},{channel,error},{federation,error}"
       - SSL="false"
   hazel:
     image: rbrooker/rabbitmq:latest
     ports:
-      - "26672:26672"    
+      - "55672:55672"
     links:
       - bigwig:bigwig
     container_name: hazel
     hostname: "hazel"
     environment:
-      - AMQP_TCP_PORT=26672
+      - AMQP_TCP_PORT=55672
       - MASTER_NAME=bigwig
       - FEDERATION=1
       - MASTER=0
-      - NODE_TYPE="ram"
-      - SSL="false"
     volumes:
       - ./rabbit/logs:/var/log/rabbitmq
   fiver:
     image: rbrooker/rabbitmq:latest
     ports:
-      - "27672:27672"    
+      - "35672:35672"
     links:
       - bigwig:bigwig
     container_name: fiver
     hostname: "fiver"
     environment:
-      - AMQP_TCP_PORT=27672
+      - AMQP_TCP_PORT=35672
       - MASTER_NAME=bigwig
+      - FEDERATION=1
       - MASTER=0
-      - FEDERATION=1
-      - SSL="false"
     volumes:
       - ./rabbit/logs:/var/log/rabbitmq
-  lord-frith:
-    image: rbrooker/rabbitmq:latest
-    ports:
-      - "28672:28672"    
-      - "18672:15672"
-    links:
-      - bigwig:bigwig
-      - fiver:fiver
-      - hazel:hazel  
-    container_name: lord-frith
-    hostname: "lord-frith"
-    environment:
-      - AMQP_TCP_PORT=28672
-      - MASTER_NAME=bigwig
-      - FEDERATION=1
-      - MASTER=1
-      - CLUSTERED=1
-      - SSL="false"
-    volumes:
-      - ./rabbit/logs:/var/log/rabbitmq
-  

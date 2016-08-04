@@ -14,7 +14,7 @@ LABEL rabbit_version.major="3.6" \
 # Environmental Values, sporting defauls, but allowing for configuration at run
 ENV AMQP_IP_LISTEN="0.0.0.0" AMQP_TCP_PORT="5672" USER="admin" PASSWORD="admin" DEFAULT_VHOST="/" DEFAULT_USER_TAG="['administrator']"
 
-ENV AUTH_BACKENDS="[rabbit_auth_backend_internal,rabbitmq_auth_mechanism_ssl]" AUTH_MECHANISMS="['PLAIN','AMQPLAIN','EXTERNAL']" 
+ENV AUTH_BACKENDS="[rabbit_auth_backend_internal,rabbitmq_auth_mechanism_ssl]" AUTH_MECHANISMS="['PLAIN','AMQPLAIN','EXTERNAL']"
 ENV LOG_LEVEL="{connection,error},{channel,warning},{federation,warning}"
 
 ENV FEDERATION=1 SHOVEL=0
@@ -45,8 +45,8 @@ RUN echo "deb http://www.rabbitmq.com/debian/ testing main" | tee /etc/apt/sourc
 RUN echo "deb https://packages.erlang-solutions.com/ubuntu/ xenial contrib" | tee /etc/apt/sources.list.d/erlang.list
 # Ensure APT installs from the proper repos
 ADD preferences /etc/apt/preferences
-RUN apt-get update; apt-get install -y rabbitmq-server=$RABBITMQ_VERSION erlang-nox=$ERLANG_VERSION
-
+RUN apt-get update; apt-get install -y erlang-nox=$ERLANG_VERSION; apt-mark hold erlang-nox=$ERLANG_VERSION
+RUN apt-get update; apt-get install -y rabbitmq-server=$RABBITMQ_VERSION
 # clean extra-files
 RUN  apt-get autoremove -y ; apt-get clean && rm -rf /var/lib/apt/lists/*
 
