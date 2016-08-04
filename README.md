@@ -80,7 +80,7 @@ See the [Wiki Clustering](https://github.com/cognition/rbrooker-rabbitmq/wiki/Cl
 
 
 
-Common Gatachas
+Common Gotchas
 ---------------
 
 ``` SSL=0 ``` should be ```SSL="false" ```
