@@ -17,7 +17,7 @@ ENV AMQP_IP_LISTEN="0.0.0.0" AMQP_TCP_PORT="5672" USER="admin" PASSWORD="admin" 
 ENV AUTH_BACKENDS="[rabbit_auth_backend_internal,rabbitmq_auth_mechanism_ssl]" AUTH_MECHANISMS="['PLAIN','AMQPLAIN','EXTERNAL']"
 ENV LOG_LEVEL="{connection,error},{channel,warning},{federation,warning}"
 
-ENV FEDERATION=1 SHOVEL=0
+ENV FEDERATION=1 SHOVEL=0 WAIT=0
 
 ENV CLUSTER_AGENT=0 MASTER_NAME="bigwig" NODE_TYPE="disc" MASTER=1 HEARTBEAT="600" FRAME_MAX="131072" HANDSHAKE_TIMEOUT="10000"
 

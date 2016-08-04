@@ -3,6 +3,9 @@
 # Written By: Ramon Brooker <rbrooker@aetherealmind.com>
 # (c) 2016
 
+if [ $WAIT > 0 ]; then
+  sleep $WAIT
+fi
 
 
 
