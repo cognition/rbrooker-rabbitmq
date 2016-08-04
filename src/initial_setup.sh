@@ -50,9 +50,14 @@ fi
 /bin/bash /rabbitmq.config.sh
 echo "first config written"
 
+if [ ! $CORS_ALLOWED_ORIGINS = 'nil' ]; then
+  CORS="{cors_allow_origins,\"$CORS_ALLOWED_ORIGINS\"},"
+  sed -i -e  "s|%%CORS_ALLOWED_ORIGINS_HERE|${CORS}|g" rabbitmq.config.0 
+fi
+
 if [ ! $LOAD_DEFINITIONS = 'nil' ]; then
-  LOAD_DEFINITIONS="{load_definitions,\"$LOAD_DEFINITIONS\"},"
-  sed -i -e  "s|%%LOAD_DEFINITIONS_HERE|${LOAD_DEFINITIONS}|g" rabbitmq.config.0 
+  DEFINITION_PATH="{load_definitions,\"$LOAD_DEFINITIONS\"}," 
+  sed -i -e  "s|%%LOAD_DEFINITIONS_HERE|${DEFINITION_PATH}|g" rabbitmq.config.0
 fi
 
 mv rabbitmq.config.0 /etc/rabbitmq/rabbitmq.config
