@@ -12,7 +12,10 @@ LABEL rabbit_version.major="3.6" \
 
 # IPv6 Env have been removed untill the support for IPv6 is stable in Erlang
 # Environmental Values, sporting defauls, but allowing for configuration at run
-ENV AMQP_IP_LISTEN="0.0.0.0" AMQP_TCP_PORT="5672" USER="admin" PASSWORD="admin" DEFAULT_VHOST="/" DEFAULT_USER_TAG="['administrator']" AUTH_BACKENDS="[rabbit_auth_backend_internal,rabbitmq_auth_mechanism_ssl]" AUTH_MECHANISMS="['PLAIN','AMQPLAIN','EXTERNAL']" LOG_LEVEL="{connection,error},{channel,warning},{federation,warning}"
+ENV AMQP_IP_LISTEN="0.0.0.0" AMQP_TCP_PORT="5672" USER="admin" PASSWORD="admin" DEFAULT_VHOST="/" DEFAULT_USER_TAG="['administrator']"
+
+ENV AUTH_BACKENDS="[rabbit_auth_backend_internal,rabbitmq_auth_mechanism_ssl]" AUTH_MECHANISMS="['PLAIN','AMQPLAIN','EXTERNAL']" 
+ENV LOG_LEVEL="{connection,error},{channel,warning},{federation,warning}"
 
 ENV FEDERATION=1 SHOVEL=0
 

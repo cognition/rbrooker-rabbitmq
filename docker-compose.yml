@@ -5,59 +5,76 @@
 
 version: '2'
 services: 
-  rabbit-master:
-    image: rbrooker/rabbitmq:latest
-    container_name: ma
-    hostname: "master"
+  bigwig:
+    image: rbrooker/rabbitmq:3.6.4-1
+    container_name: bigwig
+    hostname: "bigwig"
     ports:
       - "5672:5672"
       - "15672:15672"
     volumes:
       - ./rabbit/etc:/etc/rabbitmq
       - ./rabbit/logs:/var/log/rabbitmq
+      - ./rabbit-config-volume:/custom_config
     environment:
       - FEDERATION=1
-  rabbit-ram:
-    image: rbrooker/rabbitmq:latest
+      - LOG_LEVEL="{connection,error},{channel,error},{federation,error}" 
+      - SSL="false"
+  hazel:
+    image: rbrooker/rabbitmq:3.6.4-1
     ports:
-      - "6672:5672"    
+      - "6672:6672"    
     links:
-      - rabbit-master:master
-    container_name: saram
+      - bigwig:bigwig
+    container_name: hazel
+    hostname: "hazel"
     environment:
-      - MASTER_NAME=master
+      - AMQP_TCP_PORT=6672
+      - SSL_TCP_PORT=6671
+      - MASTER_NAME=bigwig
       - FEDERATION=1
       - MASTER=0
-      - NODE_TYPE=ram
+      - NODE_TYPE="ram"
+      - SSL="false"
     volumes:
       - ./rabbit/logs:/var/log/rabbitmq
-  rabbit-disc-m:
-    image: rbrooker/rabbitmq:latest
+  fiver:
+    image: rbrooker/rabbitmq:3.6.4-1
     ports:
-      - "7672:5672"    
+      - "7672:7672"    
     links:
-      - rabbit-master:master
-    container_name: samdisc
+      - bigwig:bigwig
+    container_name: fiver
+    hostname: "fiver"
     environment:
-      - MASTER_NAME=master
+      - AMQP_TCP_PORT=7672
+      - SSL_TCP_PORT=7671
+      - MASTER_NAME=bigwig
+      - MASTER=0
+      - FEDERATION=1
+      - SSL="false"
+    volumes:
+      - ./rabbit/logs:/var/log/rabbitmq
+  lord-frith:
+    image: rbrooker/rabbitmq:3.6.4-1
+    ports:
+      - "8672:8672"    
+      - "18672:18672"
+    links:
+      - bigwig:bigwig
+      - fiver:fiver
+      - hazel:hazel  
+    container_name: lord-frith
+    hostname: "lord-frith"
+    environment:
+      - AMQP_TCP_PORT=8672
+      - SSL_TCP_PORT=8671
+      - MANAGEMENT_PORT=18572
+      - MASTER_NAME=bigwig
       - FEDERATION=1
       - MASTER=1
-      - CLUSTER_AGENT=1
-      - NODE_TYPE=disc
-    volumes:
-      - ./rabbit/logs:/var/log/rabbitmq
-  rabbit-disc:
-    image: rbrooker/rabbitmq:latest
-    ports:
-      - "8672:5672"    
-    links:
-      - rabbit-master:master
-    container_name: sadisc
-    environment:
-      - MASTER_NAME=master
-      - FEDERATION=1
-      - MASTER=0
-      - NODE_TYPE=disc
+      - CLUSTERED=1
+      - SSL="false"
     volumes:
       - ./rabbit/logs:/var/log/rabbitmq
   
