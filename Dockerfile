@@ -12,11 +12,11 @@ LABEL rabbit_version.major="3.6" \
 
 # IPv6 Env have been removed untill the support for IPv6 is stable in Erlang
 # Environmental Values, sporting defauls, but allowing for configuration at run
-ENV AMQP_IP_LISTEN="0.0.0.0" AMQP_TCP_PORT="5672" USER="admin" PASSWORD="admin" DEFAULT_VHOST="/" DEFAULT_USER_TAG="['administrator']" AUTH_BACKENDS="[rabbit_auth_backend_internal,rabbitmq_auth_mechanism_ssl]" AUTH_MECHANISMS="['PLAIN','AMQPLAIN','EXTERNAL'] LOG_LEVEL="{connection,error},{channel,warning},{federation,warning}"
+ENV AMQP_IP_LISTEN="0.0.0.0" AMQP_TCP_PORT="5672" USER="admin" PASSWORD="admin" DEFAULT_VHOST="/" DEFAULT_USER_TAG="['administrator']" AUTH_BACKENDS="[rabbit_auth_backend_internal,rabbitmq_auth_mechanism_ssl]" AUTH_MECHANISMS="['PLAIN','AMQPLAIN','EXTERNAL']" LOG_LEVEL="{connection,error},{channel,warning},{federation,warning}"
 
 ENV FEDERATION=1 SHOVEL=0
 
-ENV CLUSTER_AGENT=0 MASTER_NAME='bigwig' NODE_TYPE="disc" MASTER=1 HEARTBEAT="600" FRAME_MAX="131072" HANDSHAKE_TIMEOUT="10000"
+ENV CLUSTER_AGENT=0 MASTER_NAME="bigwig" NODE_TYPE="disc" MASTER=1 HEARTBEAT="600" FRAME_MAX="131072" HANDSHAKE_TIMEOUT="10000"
 
 ENV CHANNEL_MAX="128" EXPIRES="36000" MESSAGE_TTL="36000" INITIAL_MAX_FRAME="4096"
 
