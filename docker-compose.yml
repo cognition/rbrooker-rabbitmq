@@ -39,7 +39,11 @@ services:
       - "35672:35672"
     links:
       - bigwig:bigwig
+      - hazel:hazel
     container_name: fiver
+    depends_on: 
+      - bigwig
+      - hazel
     hostname: "fiver"
     environment:
       - AMQP_TCP_PORT=35672
