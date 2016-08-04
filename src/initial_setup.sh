@@ -4,7 +4,10 @@
 # (c) 2016
 
 if [ $WAIT > 0 ]; then
-  sleep $WAIT
+  echo "waiting...."
+
+  sleep $((WAIT + 5))
+
 fi
 
 
