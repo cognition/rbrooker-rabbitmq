@@ -81,7 +81,7 @@ cat > rabbitmq.config.0 <<EOF
    %%CORS_ALLOWED_ORIGINS_HERE
    %% {collect_statistics_interval, $COLLECT_STATISTICS_INTERVAL},
    {http_log_dir, "${HTTP_ACCESS_LOG_PATH}"},
-   {listener, [ {port,  "${MANAGEMENT_PORT}"},
+   {listener, [ {port,  ${MANAGEMENT_PORT}},
                 {ip,   "${MANAGEMENT_IP}"},
                 {ssl,   ${SSL}},
                 {ssl_opts, 
