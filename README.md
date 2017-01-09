@@ -8,7 +8,7 @@ I have populated the variables with defaults values, some I left alone, whereas 
 Please see the wiki for details and sample installations 
 
 
-### RabbitMQ v 3.6.4-1 and Erlang-NOX 1:18.3-1
+### RabbitMQ v 3.6.6-1 and Erlang-NOX 19.2-1
 * [RabbitMQ Project](http://www.rabbitmq.com/download.html)
 * [Erlang Solutions](https://www.erlang-solutions.com/resources/download.html)
 
