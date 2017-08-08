@@ -2,7 +2,7 @@ FROM ubuntu
 MAINTAINER Ramon Brooker <rbrooker@aetherealmind.com>
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV RABBITMQ_VERSION="3.6.6-1" ERLANG_VERSION="1:19.2-1"
+ENV RABBITMQ_VERSION="3.6.6" ERLANG_VERSION="1:19.2-1"
 
 # for setting
 LABEL rabbit_version.major="3.6" \
