@@ -2,13 +2,13 @@ FROM ubuntu
 MAINTAINER Ramon Brooker <rbrooker@aetherealmind.com>
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV RABBITMQ_VERSION="3.6.6" ERLANG_VERSION="1:19.2-1"
+ENV RABBITMQ_VERSION="3.6.12-1" ERLANG_VERSION="1:19.3.6"
 
 # for setting
 LABEL rabbit_version.major="3.6" \
-      rabbit_version.minor="3.6.6-1" \
-      erlang_version="1:19.2-1" \
-      ERLANG_RELEASE="OTP 19.2"
+      rabbit_version.minor="3.6.12-1" \
+      erlang_version="1:19.3.6" \
+      ERLANG_RELEASE="OTP 19.3"
 
 # IPv6 Env have been removed untill the support for IPv6 is stable in Erlang
 # Environmental Values, sporting defauls, but allowing for configuration at run
@@ -45,7 +45,7 @@ RUN echo "deb http://www.rabbitmq.com/debian/ testing main" | tee /etc/apt/sourc
 RUN echo "deb https://packages.erlang-solutions.com/ubuntu/ xenial contrib" | tee /etc/apt/sources.list.d/erlang.list
 # Ensure APT installs from the proper repos
 ADD preferences /etc/apt/preferences
-RUN apt-get update; apt-get install -y erlang-nox=$ERLANG_VERSION; apt-mark hold erlang-nox=$ERLANG_VERSION
+RUN apt-get update; apt-get install -y esl-erlang=$ERLANG_VERSION; apt-mark hold esl-erlang=$ERLANG_VERSION
 RUN apt-get update; apt-get install -y rabbitmq-server=$RABBITMQ_VERSION
 # clean extra-files
 RUN  apt-get autoremove -y ; apt-get clean && rm -rf /var/lib/apt/lists/*
