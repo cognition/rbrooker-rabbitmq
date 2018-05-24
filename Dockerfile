@@ -2,13 +2,13 @@ FROM ubuntu
 MAINTAINER Ramon Brooker <rbrooker@aetherealmind.com>
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV RABBITMQ_VERSION="3.6.14-1" ERLANG_VERSION="1:20.1"
+ENV RABBITMQ_VERSION="3.7.5-1" ERLANG_VERSION="1:20.3"
 
 # for setting
-LABEL rabbit_version.major="3.6" \
-      rabbit_version.minor="3.6.14-1" \
-      erlang_version="1:20.1" \
-      ERLANG_RELEASE="OTP 20.1"
+LABEL rabbit_version.major="3.7" \
+      rabbit_version.minor="3.7.5-1" \
+      erlang_version="1:20.3" \
+      ERLANG_RELEASE="OTP 20.3"
 
 # IPv6 Env have been removed untill the support for IPv6 is stable in Erlang
 # Environmental Values, sporting defauls, but allowing for configuration at run
@@ -34,21 +34,28 @@ ENV MANAGEMENT_IP="0.0.0.0" MANAGEMENT_PORT="15672" MEM_MONITOR_INTERVAL="2500" 
 RUN echo exit 1 > /usr/sbin/policy-rc.d; chmod +x /usr/sbin/policy-rc.d
 
 # Install Updates, and other needed prgms
-RUN apt-get update ; apt-get -y install logrotate wget apt-utils apt-transport-https adduser init-system-helpers socat; apt-get -y upgrade
+RUN apt-get update; apt-get -y install logrotate curl apt-utils apt-transport-https adduser init-system-helpers socat gnupg; apt-get -y upgrade
 
 
 # Install RabbitMQ
 
-RUN wget -O-  https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc | apt-key add -
-RUN wget -O-  https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | apt-key add -
-RUN echo "deb http://www.rabbitmq.com/debian/ testing main" | tee /etc/apt/sources.list.d/rabbitmq.list
-RUN echo "deb https://packages.erlang-solutions.com/ubuntu/ xenial contrib" | tee /etc/apt/sources.list.d/erlang.list
+RUN curl -L  https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc | apt-key add
+
+RUN curl -L https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey | apt-key add
+
+RUN echo "deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ artful main" | tee /etc/apt/sources.list.d/rabbitmq.list
+
+RUN echo "deb https://packages.erlang-solutions.com/ubuntu/ bionic contrib" | tee /etc/apt/sources.list.d/erlang.list
+
+
 # Ensure APT installs from the proper repos
 ADD preferences /etc/apt/preferences
 RUN apt-get update; apt-get install -y esl-erlang=$ERLANG_VERSION; apt-mark hold esl-erlang=$ERLANG_VERSION
-RUN apt-get update; apt-get install -y rabbitmq-server=$RABBITMQ_VERSION
+
+RUN apt-get update; apt-get install -y rabbitmq-server=${RABBITMQ_VERSION}
+
 # clean extra-files
-RUN  apt-get autoremove -y ; apt-get clean && rm -rf /var/lib/apt/lists/*
+#RUN  apt-get autoremove -y ; apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENV ERLANG_COOKIE="BAI0VA7ROHXEOQUASH6AIRAGHE9NOH0EOQUAECIE"
 
@@ -63,5 +70,3 @@ VOLUME ["/etc/rabbitmq","/var/log/rabbitmq","/server","/var/lib/rabbitmq","/logs
 EXPOSE 5671 5672 15672 44001-44010
 
 CMD ["/run.sh"]
-
-
