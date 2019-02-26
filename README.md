@@ -6,7 +6,7 @@ I have populated the variables with defaults values, some I left alone, whereas 
 
 Please see the wiki for details and sample installations
 
-### RabbitMQ v 3.7.5 and Erlang-NOX 20.3
+### RabbitMQ v 3.7.12 and Erlang-NOX 20.3
 * [RabbitMQ Project](http://www.rabbitmq.com/download.html)
 * [Erlang Solutions](https://www.erlang-solutions.com/resources/download.html)
 

@@ -2,11 +2,11 @@ FROM ubuntu
 MAINTAINER Ramon Brooker <rbrooker@aetherealmind.com>
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV RABBITMQ_VERSION="3.7.5-1" ERLANG_VERSION="1:20.3"
+ENV RABBITMQ_VERSION="3.7.12-1" ERLANG_VERSION="1:20.3"
 
 # for setting
 LABEL rabbit_version.major="3.7" \
-      rabbit_version.minor="3.7.5-1" \
+      rabbit_version.minor="3.7.12-1" \
       erlang_version="1:20.3" \
       ERLANG_RELEASE="OTP 20.3"
 
